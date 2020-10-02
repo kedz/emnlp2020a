@@ -1,0 +1,29 @@
+In an MR-to-text task, we are given as input an MR $\mr \in \MRs$ from which
+to generate an appropriate natural language utterance $\utt  \in \Utts$, where
+\mr~consists of a dialog act that characterizes the communicative goal of the
+utterance and an unordered and variably sized set of attribute-value pairs.
+Attributes are either binary or categorical variables (e.g.,
+\Atr{family-friendly}: [``yes'', ``no''] or \Atr{food}: [``Chinese'',
+``English'', ``French'', $\ldots$]).\footnote{There are also list-valued
+attributes but we treat them as individual attribute-value pairs (i.e. in
+\autoref{fig:exviggo}, both \AV{genres}{role-playing} and
+\AV{genres}{hack-and-slash} are in $\mr$.)}
+
+Let each attribute-value pair \attr~and dialog act \da~be tokens from a
+vocabulary \Attrs, and define the size of an MR, denoted  $\size{\mr}$,  to be
+the number of attribute-values $\attr \in \mr$.  A \emph{linearization
+strategy} $\lin : \MRs \rightarrow \Attrs^*$ is a mapping of the dialog act
+and attribute-values in \mr~to an ordered sequence, i.e.  $\lin(\mr) = [\da,
+\attr_1, \attr_2, \ldots, \attr_\size{\mr}]$.  Regardless of the choice of
+\lin, the first token in $\lin(\mr)$ is always the dialog act \da.
+
+We experiment with both gated recurrent unit (GRU) \cite{cho2014} and
+Transformer \cite{vaswani2017} based S2S model variants to implement a
+conditional probability model $\model(\cdot| \lin(\mr); \theta) : \Utts
+\rightarrow (0, 1)$ over natural language utterances. The model parameters,
+$\theta$ are learned by approximately maximizing the log-likelihood
+$\displaystyle \mathcal{L}(\theta)= \sum_{(\mr,\utt)\in \mathcal{D}}  \log
+\model(\utt|\lin(\mr); \theta)$ on the training set $\mathcal{D}$.
+Additionally, we experiment with a pretrained S2S Transformer model, BART
+\cite{lewis2020}, where its parameters $\theta_0$ are fine-tuned on
+$\mathcal{L}(\theta_0)$.

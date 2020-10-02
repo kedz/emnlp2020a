@@ -1,0 +1,80 @@
+Address The Following Comments:
+
+[ ] Add reason for rule aligner?
+
+[ ] Add link for specifier slot description to appendix?
+
+[ ] subspan or sub-span or token span????
+
+[ ] if space allows, make a figure for data augmentation example.
+
+[ ] consider explicitly saying alignment training is controllable
+   also consider moving alignment training as first linearization 
+   add a figure with possible orders
+
+[X] Fix figure 1 caption.
+
+[ ] create code repository.
+
+[ ] grep and any dialog and change to dialogue
+
+[X] State the language (in datasets section)
+
+[ ] Near 499  can you provide a link to the official E2E eval scripts?
+
+[ ] near 738: I think you put NDP where you meant NUP
+
+[ ] near 746: what does NST stand for?
+
+[ ] Table 5 shows the number of times each model was ranked 1, not the percent.
+Typos
+
+[ ] erronious
+[ ] experients
+[ ] exmaple,
+[ ] consitently
+[ ] acheive
+
+[ ] Related work mention: Neural data-to-text generation: A comparison between
+        pipeline and end-to-end architectures
+
+[ ] Related work, mention Linguistic realisation as machine translation: 
+        Comparing different {MT} models for {AMR}-to-text generation",
+
+[ ] better define control
+
+[ ] limitations
+
+[ ] discussion mention model based faithuflness, (nie et al, kedzie and mckeown) and cleaning (wang et al, tgen )
+[ ] check claim in 353-361 on comparability
+[ ] discussion, mention other controllable models,
+    "Learning Neural Templates for Text Generation" (EMNLP 2018), 
+    "Posterior Control of Blackbox Generation" (ACL 2020), 
+    "Neural Data-to-Text Generation via Jointly Learning the Segmentation 
+        and Correspondence" (ACL 2020))
+
+[ ] Significance testing
+    Significance tests should be carried out: are the score differences shown 
+        eg in Tables 2 and 3 statistically significant ?
+    
+
+
+
+While I think the experiments in the paper are generally well done, I wanted
+to caution the authors about their claim (lines 353-361) that, despite their
+cleaning of the training set, their results are comparable to previous work
+since they leave the test set intact. This is not especially convincing, nor
+is their comparison with the updated TGen+ model, which I believe was trained
+on *different* cleaned data. Since comparison with previous work is not
+central to the authors' main claims, I urge them to emphasize they are using a
+different dataset than is standard, and to limit comparison just to models
+trained on exactly the same data. (This might also give the authors the
+opportunity to train a TGen+-like baseline with a Transformer, as requested by
+R1).
+
+Given the success of the random ordering experiments (Table 4), it might also
+be worth the authors mentioning that there have been much more complicated
+attempts to control the output of NLG systems on the E2E task (e.g.,
+ whereas the authors find that a very simple approach works quite well.
+
+

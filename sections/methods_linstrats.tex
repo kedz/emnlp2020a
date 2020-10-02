@@ -1,0 +1,86 @@
+\subsection{Linearization Strategies}
+\label{sec:linstrats}
+
+Because of the recurrence in the GRU model and position embeddings in
+Transformer-based models, it is usually the case that different linearization
+strategies, i.e.  $\lin(\mr) \ne \lin^\prime(\mr)$, will result in different
+model internal representations and therefore different conditional probability
+distributions. These differences can be non-trivial, yielding changes in model
+behavior especially with respect to faithfulness or fine-grained control.
+
+We study four linearization strategies, \lsname{(i) random}, \lsname{(ii)
+increasing-frequency}, \lsname{(iii) fixed-position}, and \lsname{(iv)
+alignment training}, which we describe below. For visual examples of each
+strategy, see \autoref{fig:linstrats}.  Note that linearization determines the
+order of the attribute-values presented to the S2S encoder, and \textbf{only} in the
+case of alignment training does it correspond to the order in which the
+attribute-values are realized in the utterance. When presenting a linearized
+MR to the model encoder, we always prepend and append distinguished
+\textit{start} and \textit{stop} tokens respectively.
+
+\input{figures/linstrats.tex}
+
+\paragraph{Random (\textsc{Rnd})} In the \lsname{random} linearization
+(\lsshort{Rnd}), we randomly order the attribute-value pairs for a given MR.
+This strategy serves as a baseline for determining if linearization ordering
+matters at all for faithfulness. \lsshort{Rnd} is similar to token level noise
+used in sequential denoising autoencoders \cite{wang2019} and might
+even improve faithfulness.  During training, we resample the ordering for each
+example at every epoch.  We do not resample the validation set in order to
+obtain stable results from which to pick the best model.
+
+\paragraph{Increasing Frequency (\textsc{If})} In the \lsname{increasing
+frequency} linearization (\lsshort{If}), we order the attribute-value pairs by
+increasing frequency of occurrence in the training data i.e. $\acount(\attr_i)
+\le \acount(\attr_{i+1})$.  We hypothesize that placing frequently occurring
+items in a consistent location may make it easier for $\model$ to realize
+those items correctly, possibly at the expense of rarer items.
+
+\paragraph{Fixed Position (\textsc{Fp})} We take  consistency one step further
+and create a fixed ordering of all attributes, \textit{n.b.} not
+attribute-values, ordering them in increasing frequency of occurrence on the
+training set (i.e. every instance has the same order of attributes in the
+encoder input). In this \lsname{fixed position} linearization (\lsshort{Fp}),
+attributes that are not present in an MR are explicitly represented with an
+\Val{N/A} value.  For list-valued slots, we determine the maximum length
+list in the training data and create that many repeated slots in the input
+sequence.  This linearization is feasible for datasets with a modest number of
+unique attributes (in our case Viggo has 14 attributes and E2E eight) but may 
+not easily scale to 10s, 100s, or larger attribute vocabularies. 
+
+\paragraph{Alignment Training (\textsc{At})} 
+
+In the \lsname{alignment training} linearization (\lsshort{At}), during
+training, the order of attribute-value pairs $\attr_1, \attr_2, \ldots,
+\attr_\size{\mr}$ matches the order in which they are realized in the
+corresponding training utterance.  This is feasible because in the majority of
+cases, there is a one-to-one mapping of attribute-values and utterance
+sub-spans.
+
+%%  %Training $\model$ with this strategy yields a model
+%%  %that is highly controllable, i.e. when conditioning on $\lin(\mr) = [\da, \attr_i, \attr_{i+1}, \ldots]$, $\model(\cdot|\lin(\mr);\theta)$ will 
+%%  %place higher probability on utterances where $\attr_i$ is realized first,
+%%  %followed by $\attr_{i+1}$, and so on.
+
+We obtain this ordering using a manually constructed set of matching rules to
+identify which utterance sub-spans correspond to each attribute-value pair
+(see \autoref{sec:align}).
+
+Crucially, \lsshort{At}~stands in contrast to the  first three strategies
+(\lsshort{Rnd}, \lsshort{If}, and \lsshort{Fp}) which do not have any
+correspondence between the the order of attribute-value pairs in $\lin(\mr)$
+and the order in which they are realized in the corresponding utterance
+$\utt$. %and as a  result, models trained with those strategies %are not controllable. 
+%KM - Again, isn't this something you will show through your experiments?
+
+
+
+
+At test time, when there is no reference utterance \lsshort{At}
+cannot specify a linearization. However, models trained with \lsshort{At}
+can generate an  utterance from an arbitrary utterance plan
+$\attr_1, \attr_2, \ldots, \attr_{\size{\mr}}$ 
+provided by an external source, such as an utterance planner model or human 
+reference.
+%%  %. We refer to such an ordering as an {\em utterance plan}.
+%%  %KM - I put in italics. This sentence implies it's the first time mentioned, but you mention t in the intro. Perhaps you can define it there? 
