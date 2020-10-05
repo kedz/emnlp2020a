@@ -1,12 +1,12 @@
 \subsection{Linearization Strategies}
 \label{sec:linstrats}
 
-Because of the recurrence in the GRU model and position embeddings in
-Transformer-based models, it is usually the case that different linearization
+Because of the recurrence in the GRU and position embeddings in the
+Transformer, it is usually the case that different linearization
 strategies, i.e.  $\lin(\mr) \ne \lin^\prime(\mr)$, will result in different
 model internal representations and therefore different conditional probability
 distributions. These differences can be non-trivial, yielding changes in model
-behavior especially with respect to faithfulness or fine-grained control.
+behavior with respect to faithfulness and control.
 
 We study four linearization strategies, \lsname{(i) random}, \lsname{(ii)
 increasing-frequency}, \lsname{(iii) fixed-position}, and \lsname{(iv)
@@ -22,17 +22,17 @@ MR to the model encoder, we always prepend and append distinguished
 
 \paragraph{Random (\textsc{Rnd})} In the \lsname{random} linearization
 (\lsshort{Rnd}), we randomly order the attribute-value pairs for a given MR.
-This strategy serves as a baseline for determining if linearization ordering
+This strategy serves as a baseline for determining if linearization 
 matters at all for faithfulness. \lsshort{Rnd} is similar to token level noise
-used in sequential denoising autoencoders \cite{wang2019} and might
+used in denoising auto-encoders \cite{wang2019} and might
 even improve faithfulness.  During training, we resample the ordering for each
 example at every epoch.  We do not resample the validation set in order to
-obtain stable results from which to pick the best model.
+obtain stable results for model selection.
 
 \paragraph{Increasing Frequency (\textsc{If})} In the \lsname{increasing
 frequency} linearization (\lsshort{If}), we order the attribute-value pairs by
-increasing frequency of occurrence in the training data i.e. $\acount(\attr_i)
-\le \acount(\attr_{i+1})$.  We hypothesize that placing frequently occurring
+increasing frequency of occurrence in the training data (i.e., $\acount(\attr_i)
+\le \acount(\attr_{i+1})$).  We hypothesize that placing frequently occurring
 items in a consistent location may make it easier for $\model$ to realize
 those items correctly, possibly at the expense of rarer items.
 
@@ -45,7 +45,8 @@ attributes that are not present in an MR are explicitly represented with an
 \Val{N/A} value.  For list-valued slots, we determine the maximum length
 list in the training data and create that many repeated slots in the input
 sequence.  This linearization is feasible for datasets with a modest number of
-unique attributes (in our case Viggo has 14 attributes and E2E eight) but may 
+unique attributes %(in our case Viggo has 14 attributes and E2E eight) 
+but may 
 not easily scale to 10s, 100s, or larger attribute vocabularies. 
 
 \paragraph{Alignment Training (\textsc{At})} 
@@ -55,7 +56,7 @@ training, the order of attribute-value pairs $\attr_1, \attr_2, \ldots,
 \attr_\size{\mr}$ matches the order in which they are realized in the
 corresponding training utterance.  This is feasible because in the majority of
 cases, there is a one-to-one mapping of attribute-values and utterance
-sub-spans.
+subspans.
 
 %%  %Training $\model$ with this strategy yields a model
 %%  %that is highly controllable, i.e. when conditioning on $\lin(\mr) = [\da, \attr_i, \attr_{i+1}, \ldots]$, $\model(\cdot|\lin(\mr);\theta)$ will 
@@ -63,7 +64,7 @@ sub-spans.
 %%  %followed by $\attr_{i+1}$, and so on.
 
 We obtain this ordering using a manually constructed set of matching rules to
-identify which utterance sub-spans correspond to each attribute-value pair
+identify which utterance subspans correspond to each attribute-value pair
 (see \autoref{sec:align}).
 
 Crucially, \lsshort{At}~stands in contrast to the  first three strategies
@@ -81,6 +82,8 @@ cannot specify a linearization. However, models trained with \lsshort{At}
 can generate an  utterance from an arbitrary utterance plan
 $\attr_1, \attr_2, \ldots, \attr_{\size{\mr}}$ 
 provided by an external source, such as an utterance planner model or human 
-reference.
+reference. {\color{red}See \autoref{fig:ctrlouts} for an example how an \lsshort{At}-trained model might follow three different plans for the same MR.}
 %%  %. We refer to such an ordering as an {\em utterance plan}.
 %%  %KM - I put in italics. This sentence implies it's the first time mentioned, but you mention t in the intro. Perhaps you can define it there? 
+
+\input{figures/ctrlouts.tex}

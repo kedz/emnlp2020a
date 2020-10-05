@@ -1,0 +1,300 @@
+
+\section{Random Permutation Examples}
+\label{app:examples}
+We show examples of random permutation utterance plans, and those
+plans reordered using the \textsc{BgUP} and \textsc{NUP} models.
+We then show model realizations of those plans.
+
+
+~\\
+
+
+\noindent
+\parbox{.333\textwidth}{\textbf{Random Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{food}{Japanese} \\
+2  &  \AV{family\_friendly}{yes} \\
+3  &  \AV{area}{riverside} \\
+4  &  \AV{name}{Blue Spice} \\
+5  &  \AV{customer\_rating}{high} \\
+\end{array}$
+
+~\\
+
+\noindent
+\parbox{.333\textwidth}{\textbf{\textsc{BgUP} Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{name}{Blue Spice} \\
+2  &  \AV{family\_friendly}{yes} \\
+3  &  \AV{food}{Japanese} \\
+4  &  \AV{area}{riverside} \\
+5  &  \AV{customer\_rating}{high} \\
+\end{array}$
+
+~\\
+
+\noindent
+\parbox{.333\textwidth}{\textbf{\textsc{NUP} Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{name}{Blue Spice} \\
+2  &  \AV{food}{Japanese} \\
+3  &  \AV{area}{riverside} \\
+4  &  \AV{family\_friendly}{yes} \\
+5  &  \AV{customer\_rating}{high} \\
+\end{array}$
+\paragraph{biGRU \textsc{At} (Random)}
+There is a Japanese child friendly place in the riverside area called Blue Spice with a high customer rating.
+
+\paragraph{biGRU \textsc{At (BgUP)}}
+Blue Spice is a kid friendly Japanese place in the riverside area with a high customer rating.
+
+\paragraph{biGRU \textsc{At} (NUP)}
+Blue Spice serves Japanese food in the riverside area. It is kid friendly and has a high customer rating.
+
+
+
+\paragraph{biGRU \textsc{At+p} (Random)}
+There is a Japanese child friendly place in the riverside area called Blue Spice which has a high customer rating.
+
+\paragraph{biGRU \textsc{At+p (BgUP)}}
+Blue Spice is kid friendly and serves Japanese food. It is located in the riverside. Its customer rating is high.
+
+\paragraph{biGRU \textsc{At+p} (NUP)}
+Blue Spice serves Japanese food in the riverside area. It is child friendly and has a high customer rating.
+
+\paragraph{Transformer \textsc{At} (Random)}
+There is a Japanese kid friendly place in the riverside area called Blue Spice. It has a high customer rating.
+
+\paragraph{Transformer \textsc{At (BgUP)}}
+Blue Spice is a kid friendly Japanese place in the riverside area with a high customer rating.
+
+\paragraph{Transformer \textsc{At} (NUP)}
+Blue Spice serves Japanese food in the riverside area. It is kid friendly and has a high customer rating.
+
+\paragraph{Transformer \textsc{At+p} (Random)}
+There is a Japanese child friendly establishment in the riverside area called Blue Spice. It has a high customer rating.
+
+\paragraph{Transformer \textsc{At+p (BgUP)}}
+Blue Spice is a kid friendly Japanese place by the riverside with a high customer rating.
+
+\paragraph{Transformer \textsc{At+p} (NUP)}
+Blue Spice serves Japanese food in the riverside area. It is child friendly and has a high customer rating.
+
+\paragraph{BART \textsc{At} (Random)}
+There is a Japanese kid friendly place in the riverside area called Blue Spice that has a high customer rating.
+
+\paragraph{BART \textsc{At (BgUP)}}
+Blue Spice is a kid friendly Japanese food place in the riverside area with a high customer rating.
+
+\paragraph{BART \textsc{At} (NUP)}
+Blue Spice serves Japanese food in the riverside area. It is kid friendly and has a high customer rating.
+
+\paragraph{BART \textsc{At+p} (Random)}
+There is a Japanese family friendly place in the riverside area called Blue Spice with a high customer rating.
+
+\paragraph{BART \textsc{At+p (BgUP)}}
+Blue Spice is a kid friendly Japanese food place in riverside with a high customer rating.
+
+\paragraph{BART \textsc{At+p} (NUP)}
+Blue Spice serves Japanese food in the riverside area. It is child friendly and has a high customer rating.
+
+
+
+
+
+
+
+~\\
+
+\clearpage
+
+\noindent
+\parbox{.333\textwidth}{\textbf{Random Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{genres}{arcade} \\
+2  &  \AV{player\_perspective}{first person} \\
+3  &  \AV{has\_mac\_release}{no} \\
+4  &  \AV{platforms}{Nintendo} \\
+5  &  \AV{name}{\small The Legend of Zelda: Ocarina of Time} \\
+\end{array}$
+~\\
+
+\noindent
+\parbox{.333\textwidth}{\textbf{\textsc{BgUP} Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{player\_perspective}{first person} \\
+2  &  \AV{genres}{arcade} \\
+3  &  \AV{platforms}{Nintendo} \\
+4  &  \AV{name}{\small The Legend of Zelda: Ocarina of Time} \\
+5  &  \AV{has\_mac\_release}{no} \\
+\end{array}$
+~\\
+
+\noindent
+\parbox{.333\textwidth}{\textbf{\textsc{NUP} Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{name}{\small The Legend of Zelda: Ocarina of Time} \\
+2  &  \AV{player\_perspective}{first person} \\
+3  &  \AV{genres}{arcade} \\
+4  &  \AV{platforms}{Nintendo} \\
+5  &  \AV{has\_mac\_release}{no} \\
+\end{array}$
+\paragraph{biGRU \textsc{At} (Random)}
+If you like arcade first person games, but it is a Mac release for the Nintendo. It is The Legend of Zelda: Ocarina of Time.
+
+\paragraph{biGRU \textsc{At (BgUP)}}
+If you're looking for a first person arcade game you can play on Nintendo, try The Legend of Zelda: Ocarina of Time. It has a Mac release.
+
+\paragraph{biGRU \textsc{At} (NUP)}
+The Legend of Zelda: Ocarina of Time is a first person arcade game for Nintendo, and it is not available on Mac.
+
+
+
+\paragraph{biGRU \textsc{At+p} (Random)}
+If you're looking for an arcade first person game, though it doesn't have a Mac release or a Nintendo game is The Legend of Zelda: Ocarina of Time.
+
+\paragraph{biGRU \textsc{At+p (BgUP)}}
+If you're looking for a first person arcade game for Nintendo, try The Legend of Zelda: Ocarina of Time. It is not available on Mac.
+
+\paragraph{biGRU \textsc{At+p} (NUP)}
+The Legend of Zelda: Ocarina of Time is a first person arcade game for Nintendo. It is not supported on Mac.
+
+
+
+
+\paragraph{Transformer \textsc{At} (Random)}
+If you like arcade first person perspective games, then you should try the Nintendo video game called The Legend of Zelda: Ocarina of Time.
+
+\paragraph{Transformer \textsc{At (BgUP)}}
+If you like first person arcade games, then you should try the Nintendo video game called The Legend of Zelda: Ocarina of Time.
+
+\paragraph{Transformer \textsc{At} (NUP)}
+The Legend of Zelda: Ocarina of Time is a first person arcade game for Nintendo. It is a game that is not available for Mac.
+
+\paragraph{Transformer \textsc{At+p} (Random)}
+If you like arcade first person games, then you should try the Nintendo video game called The Legend of Zelda: Ocarina of Time. It was released for Nintendo.
+
+\paragraph{Transformer \textsc{At+p (BgUP)}}
+If you're looking for a first person arcade game for the Nintendo, try The Legend of Zelda: Ocarina of Time. It's not available for Mac.
+
+\paragraph{Transformer \textsc{At+p} (NUP)}
+The Legend of Zelda: Ocarina of Time is a first person arcade game for the Nintendo. It is not available on Mac or Linux.
+
+\paragraph{BART \textsc{At} (Random)}
+If you're looking for an arcade game with a first person perspective that doesn't have a Mac release, then you should try the Nintendo game The Legend of Zelda: Ocarina of Time.
+
+\paragraph{BART \textsc{At (BgUP)}}
+If you like first person arcade games, then you should try the Nintendo video game called The Legend of Zelda: Ocarina of Time. Unfortunately, it doesn't have
+a Mac release.
+
+\paragraph{BART \textsc{At} (NUP)}
+The Legend of Zelda: Ocarina of Time is a first person arcade game for Nintendo, but it is not supported on Mac.
+
+\paragraph{BART \textsc{At+p} (Random)}
+If you're looking for an arcade game with a first person perspective that doesn't have a Mac release, you should check out the Nintendo video game called The Legend of Zelda: Ocarina of Time.
+
+\paragraph{BART \textsc{At+p (BgUP)}}
+If you're looking for a first person arcade game for Nintendo consoles, check out The Legend of Zelda: Ocarina of Time. It's not available on Mac though.
+
+\paragraph{BART \textsc{At+p} (NUP)}
+The Legend of Zelda: Ocarina of Time is a first person arcade game for Nintendo consoles only. It is not available on Mac.
+
+
+~\\
+
+\clearpage
+
+\noindent
+\parbox{.333\textwidth}{\textbf{Random Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{genres}{puzzle} \\
+2  &  \AV{genres}{driving/racing} \\
+3  &  \AV{name}{Metro 2033} \\
+4  &  \AV{genres}{platformer} \\
+5  &  \AV{genres}{music} \\
+\end{array}$
+
+~\\
+
+\noindent
+\parbox{.333\textwidth}{\textbf{\textsc{BgUP} Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{genres}{music} \\
+2  &  \AV{genres}{platformer} \\
+3  &  \AV{genres}{puzzle} \\
+4  &  \AV{name}{Metro 2033} \\
+5  &  \AV{genres}{driving/racing} \\
+\end{array}$
+
+~\\
+
+\noindent
+\parbox{.333\textwidth}{\textbf{\textsc{NUP} Utterance Plan}}
+$\begin{array}{ll}
+1  &  \AV{name}{Metro 2033} \\
+2  &  \AV{genres}{driving/racing} \\
+3  &  \AV{genres}{platformer} \\
+4  &  \AV{genres}{puzzle} \\
+5  &  \AV{genres}{music} \\
+\end{array}$
+
+~\\
+
+\paragraph{biGRU \textsc{At} (Random)}
+If you like puzzle racing games, try Metro 2033. It is a platformer music game.
+
+\paragraph{biGRU \textsc{At (BgUP)}}
+The music platformer puzzle game, Metro 2033, is a driving/racing game.
+
+\paragraph{biGRU \textsc{At} (NUP)}
+Metro 2033 is a driving/racing platformer with puzzle elements. It's a music game.
+
+
+\paragraph{biGRU \textsc{At+p} (Random)}
+If you like puzzle games, Metro 2033 is a driving/racing platformer. It is a music game.
+
+\paragraph{biGRU \textsc{At+p (BgUP)}}
+If you like music platformer games with puzzles, Metro 2033 is a driving/racing game.
+
+\paragraph{biGRU \textsc{At+p} (NUP)}
+Metro 2033 is a driving/racing platformer with puzzle solving. It is a music game.
+
+\paragraph{Transformer \textsc{At} (Random)}
+If you like puzzle games, Metro 2033 is a driving/racing platformer. It is a platformer game.
+
+\paragraph{Transformer \textsc{At (BgUP)}}
+If you like music games, then you should try the puzzle platformer, try Metro 2033.
+
+\paragraph{Transformer \textsc{At} (NUP)}
+Metro 2033 is a driving/racing platformer with puzzle solving.
+
+\paragraph{Transformer \textsc{At+p} (Random)}
+If you are looking for a puzzle platformer, try Metro 2033. It is a driving/racing platformer game that is a music game.
+
+\paragraph{Transformer \textsc{At+p (BgUP)}}
+If you like music games, then you should try Metro 2033. It's a puzzle driving/racing game.
+
+\paragraph{Transformer \textsc{At+p} (NUP)}
+Metro 2033 is a driving/racing platformer puzzle game.
+
+\paragraph{BART \textsc{At} (Random)}
+If you're looking for a puzzle driving/racing game, try Metro 2033. It's a platformer with music elements.
+
+\paragraph{BART \textsc{At (BgUP)}}
+If you're looking for a music platformer with puzzle solving, Metro 2033 is a driving/racing game.
+
+\paragraph{BART \textsc{At} (NUP)}
+Metro 2033 is a driving/racing platformer with puzzle and music elements.
+
+\paragraph{BART \textsc{At+p} (Random)}
+If you're looking for a puzzle game with driving/racing, Metro 2033 is a platformer with music elements.
+
+\paragraph{BART \textsc{At+p (BgUP)}}
+If you're looking for a music platformer with puzzle solving, Metro 2033 is a driving/racing game.
+
+\paragraph{BART \textsc{At+p} (NUP)}
+Metro 2033 is a driving/racing, platformer, puzzle, music game.
+
+
+\clearpage
+

@@ -1,3 +1,5 @@
+\newcommand{\placeholder}[1]{{\color{red}#1}}
+
 \newcommand{\DA}[1]{\textsc{#1}}
 \newcommand{\MR}[1]{\left[\!\!\!\left[ #1 \right]\!\!\!\right]}
 \newcommand{\AV}[2]{\textrm{\textit{#1} = ``#2''}}
@@ -5,22 +7,46 @@
 \newcommand{\Val}[1]{{``#1''}}
 \newcommand{\U}[1]{\textit{#1}}
 
-\newcommand{\mr}{\ensuremath{x}}
-\newcommand{\MRs}{\ensuremath{\mathcal{X}}}
-\newcommand{\attr}{\ensuremath{v}}
+\newcommand{\mr}{\ensuremath{\mu}}
+\newcommand{\MRs}{\ensuremath{\mathcal{M}}}
+\newcommand{\attr}{\ensuremath{x}}
 \newcommand{\utt}{\ensuremath{y}}
+\newcommand{\utttok}{\ensuremath{w}}
+
 \newcommand{\Utts}{\ensuremath{\mathcal{Y}}}
 \newcommand{\da}{\ensuremath{a}}
+\newcommand{\mrSize}{m}
 
 \newcommand{\lin}{\ensuremath{\pi}}
 \newcommand{\Lins}{\ensuremath{\Pi}}
 
 \newcommand{\Attrs}{\ensuremath{\mathcal{V}}}
+\newcommand{\uttVocab}{\ensuremath{\mathcal{W}}}
 \newcommand{\size}[1]{\ensuremath{{\lvert #1 \rvert}}}
 \newcommand{\model}{\ensuremath{p}}
 
 \newcommand{\lsname}[1]{\textit{#1}}
 \newcommand{\lsshort}[1]{\textsc{#1}}
+
+\newcommand{\bleu}{\textsc{Bleu}}
+\newcommand{\rouge}{\textsc{Rouge}}
+\newcommand{\rougel}{\textsc{Rouge-L}}
+
+\newcommand{\phraseAug}{\textsc{+p}}
+
+
+\newcommand{\biGRU}{biGRU}
+\newcommand{\Transformer}{Transformer}
+\newcommand{\BART}{BART}
+\newcommand{\BgUP}{\textsc{BgUP}}
+\newcommand{\NUP}{\textsc{NUP}}
+\newcommand{\Oracle}{\textsc{Oracle}}
+
+\newcommand{\lidstone}{\alpha}
+
+
+
+
 
 
 %?\newcommand{\alignshort}{\lsshort{At}}
@@ -46,4 +72,49 @@
 %?
 
 
+
+
+\newcommand{\fencgruparams}[1]{\hat{\eta}^{(#1)}}
+\newcommand{\rencgruparams}[1]{\check{\eta}^{(#1)}}
+\newcommand{\decgruparams}[1]{{\zeta}^{(#1)}}
+\newcommand{\embDim}{{D_w}}
+\newcommand{\hidDim}{{D_h}}
+\newcommand{\encEmbs}{\mathbf{E}}
+\newcommand{\decEmbs}{\mathbf{D}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\encWordEmb}{\mathbf{v}} 
+\newcommand{\decWordEmb}{\mathbf{w}} 
+\newcommand{\inSize}{m}
+\newcommand{\outSize}{n}
+\newcommand{\inseq}{\mathbf{x}}
+\newcommand{\zeroEmb}{\mathbf{0}}
+\newcommand{\hstate}{\boldsymbol{h}}
+\newcommand{\fhstate}{\boldsymbol{\hat{h}}}
+\newcommand{\rhstate}{\boldsymbol{\check{h}}}
+\newcommand{\fgru}{\operatorname{GRU}}
+\newcommand{\gstate}{\boldsymbol{g}}
+\newcommand{\astate}{\boldsymbol{\bar{h}}}
+\newcommand{\fgstate}{\boldsymbol{\hat{g}}}
+\newcommand{\rgstate}{\boldsymbol{\check{g}}}
+\newcommand{\weight}[1]{\mathbf{W}^{(#1)}}
+\newcommand{\bias}[1]{\mathbf{b}^{(#1)}}
+\newcommand{\attnweight}{\mathbf{K}}
+\newcommand{\attnvec}{\mathbf{k}}
+\newcommand{\zstate}{\mathbf{z}}
+
+\newcommand{\layerNorm}{\operatorname{LN}}
+\newcommand{\mmhAttn}{\operatorname{maskedMHAttn}}
+\newcommand{\mhAttn}{\operatorname{MHAttn}}
+\newcommand{\Attn}{\operatorname{Attn}}
+\newcommand{\softmax}{\operatorname{softmax}}
+\newcommand{\feedforward}{\operatorname{FF}}
+
+\newcommand{\Query}{\mathbf{Q}}
+\newcommand{\Key}{\mathbf{K}}
+\newcommand{\mrEmb}{\mathbf{W}}
+\newcommand{\uttEmb}{\mathbf{V}}
+\newcommand{\posEmb}{\mathbf{P}}
+\newcommand{\encInput}{\mathbf{H}}
+\newcommand{\decInput}{\mathbf{G}}
+\newcommand{\decInputi}{\mathbf{g}_i}
 

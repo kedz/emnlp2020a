@@ -1,17 +1,19 @@
 \subsection{Phrase-based Data Augmentation}
+\label{sec:dataaug}
 
 We augment the training data with MR/utterance pairs taken from constituent
 phrases in the original training data.  We parse all training utterances and
-enumerate all constituent phrases governed by NP, VP, ADJP, ADVP, PP, S, Sbar
+enumerate all constituent phrases governed by NP, VP, ADJP, ADVP, PP, S, 
+or Sbar
 non-terminals.\footnote{We used the
 \href{https://stanfordnlp.github.io/CoreNLP/}{Stanford CoreNLP parser
 v3.9.2}.} We then apply the attribute-value matching rules used for
 \lsshort{At} (see \autoref{sec:align}) to obtain a corresponding MR, keeping
-the dialog act of the original utterance. We discard phrases with no realized
+the dialogue act of the original utterance. We discard phrases with no realized
 attributes.  See \autoref{tab:main.dataset.stats} for augmented data
 statistics.
 
-Because we re-classify the MR of phrases using the matching rules, the
+Because we reclassify the MR of phrases using the matching rules, the
 augmented  data includes examples of how to invert binary attributes, e.g.
 from the phrase ``\U{is not on Mac,}'' which implies
 \AV{has\_mac\_release}{no,} we obtain the phrase ``\U{on Mac}''

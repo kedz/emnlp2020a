@@ -1,0 +1,105 @@
+
+\section{Human Evaluation Details}
+\label{app:humaneval}
+
+Two separate annotators ranked the 100
+E2E outputs and another two annotators ranked the 100 ViGGO outputs.
+The annotators were either undergraduate or PhD students experienced in
+NLP research but not involved in the paper. Three were native English 
+speakers and the fourth was a highly fluent English speaker.
+When computing Kendall's $\tau$ on E2E, three instances were not computable
+because one annotator gave all three outputs the same rank. These 
+three instances were assigned $\tau=0$ equivalent to no correlation.
+
+
+Annotators were given the following instructions and then made their 
+ranking annotations in Google Sheet:
+
+
+
+
+\paragraph{Instructions:} \textit{You will be shown 3 utterances that are 
+informing you about either a restaurant or a video game. 
+Please rank the utterances according to their naturalness
+(i.e. fluency and/or degree to which you believe they were written by a native English speaker). 1 = most natural, 3 = least natural.}
+
+
+\textit{Here is an example:}\\
+
+
+
+
+\begin{centering}
+\begin{tabular}{p{5.4cm} c}
+\toprule
+   &  Rank\\
+   \midrule
+    (0) There is an English food place near the Sorrento with a price range of less than \pounds20 called Blue Spice. & 2 \\
+    \midrule
+    (1) Blue Spice serves English food for less than \pounds20 and is located near the Sorrento. &  1 \\
+    \midrule
+    (2) Serving English food near the Sorrento with a price range of less than \pounds20 is Blue Spice.  & 3\\
+    \bottomrule
+\end{tabular}
+
+
+\end{centering}
+
+~\\
+
+  \textit{  Here I have decided that (1) feels the most natural, nicely breaking up information into a conjunction, while (2) seems least natural because of its run on gerund phrase in a  copula. (0) is a little bit of a run on but not egregious.}
+
+ \textit{   Do not worry if one utterance does not have all the same or inconsistent facts as the others. Judge them only on their naturalness.}
+
+
+  \textit{  In many cases you will probably feel that two or more examples are equivalent in naturalness. In this case give them the same rank. E.g.,}
+
+
+~\\
+
+\begin{centering}
+
+\begin{tabular}{p{5.5cm} c}
+\toprule
+   &  Rank\\
+   \midrule
+        (0) There is a place that serves Japanese food in the riverside area near Caf{\'e} Sicilia called the Twenty Two. &   1 \\
+   \midrule
+        (1) The Twenty Two serves Japanese food and is located near Caf{\'e} Sicilia in the riverside area. &  1 \\
+   \midrule
+        (2) Serving Japanese food in the riverside area near Caf{\'e} Sicilia is the Twenty Two.  &  2 \\
+\bottomrule
+\end{tabular}
+
+\end{centering}
+
+~\\
+
+
+\textit{When making ties, make sure the next lowest rank follows numerically, i.e. if there is a tie for 1, the next lowest rank should be 2. In other words don't do this:}
+
+~\\
+
+\begin{centering}
+
+\begin{tabular}{p{5.5cm} c}
+\toprule
+   &  Rank\\
+   \midrule
+            (0) There is a place that serves Japanese food in the riverside area near Caf{\'e} Sicilia called the Twenty Two.  &  1\\
+      (1) The Twenty Two serves Japanese food and is located near Caf{\'e} Sicilia in the riverside area. &  1 \\
+          (2) Serving Japanese food in the riverside area near Caf{\'e} Sicilia is the Twenty Two.  &  3 \\
+\bottomrule
+\end{tabular}
+
+\end{centering}
+
+~\\
+
+        \textit{    You will annotate 100 sets of 3 utterances.}
+
+
+%?
+%?
+
+%?

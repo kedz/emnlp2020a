@@ -1,0 +1,46 @@
+
+\begin{table*}
+\centering
+
+\begin{tabular}{lll c c c c  c c c c  c c c c}
+ & & &  \multicolumn{5}{c}{Automatic Quality Metrics} \\
+ \cmidrule(lr){4-8} 
+  & & &  \textsc{Bleu} &  \textsc{Nist} &  \textsc{Meteor} & \textsc{Rouge-L} & \textsc{Cide}r \\
+  \midrule
+  \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
+  &\textsc{Rnd} & &66.82&8.696&44.46&68.26&2.248 \\
+  &\textsc{Fp} & &63.40&8.414&42.32&65.64&2.032 \\
+  &\textsc{If} & &59.24&7.996&38.74&62.66&1.608 \\
+  &  & \textsc{+p}&65.82&8.604&45.10&68.14&2.238 \\
+  &\textsc{At +BgDP} & &66.38&8.682&45.04&68.28&2.298 \\
+  &\textsc{At +NDP} & &66.30&8.744&44.92&68.92&2.284 \\
+  &  & \textsc{+p}&66.48&8.758&44.98&69.12&2.300 \\
+  &\textsc{At (Oracle)} & &\textbf{69.84}&\textbf{9.244}&\textbf{47.92}&\textbf{77.28}&\textbf{2.338} \\
+  \midrule
+  \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
+  &\textsc{Rnd} & &67.36&8.722&44.86&68.20&2.296 \\
+  &\textsc{Fp} & &67.44&8.722&44.26&68.70&2.246 \\
+  &\textsc{If} & &67.12&8.706&44.96&68.10&2.284 \\
+  &  & \textsc{+p}&66.80&8.674&45.04&68.30&2.306 \\
+  &\textsc{At +BgDP} & &66.82&8.722&45.20&68.44&2.322 \\
+  &\textsc{At +NDP} & &67.00&8.792&45.08&68.98&2.306 \\
+  &  & \textsc{+p}&66.74&8.760&45.08&69.14&2.306 \\
+  &\textsc{At (Oracle)} & &\textbf{69.30}&\textbf{9.198}&\textbf{47.88}&\textbf{77.02}&\textbf{2.352} \\
+  \midrule
+  \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
+  &\textsc{Rnd} & &66.46&8.652&45.54&68.34&2.316 \\
+  &\textsc{Fp} & &65.54&8.594&45.18&67.18&2.312 \\
+  &\textsc{If} & &65.62&8.608&45.26&67.38&\textbf{2.326} \\
+  &  & \textsc{+p}&65.92&8.660&45.24&68.18&2.316 \\
+  &\textsc{At +BgDP} & &66.24&8.620&45.66&68.68&2.318 \\
+  &\textsc{At +NDP} & &66.56&8.682&45.52&69.22&2.314 \\
+  &  & \textsc{+p}&66.26&8.678&45.30&69.34&2.308 \\
+  &\textsc{At (Oracle)} & &\textbf{68.34}&\textbf{9.084}&\textbf{48.28}&\textbf{77.08}&2.282 \\
+  \midrule
+  \end{tabular}
+
+
+
+\caption{E2E test set automatic quality measures from the official E2E evaluation script.}
+\label{app:e2e.auto}
+\end{table*}

@@ -163,7 +163,8 @@ booktitle = {Proceedings of the 31st International Conference on Neural Informat
 pages = {6000–6010},
 numpages = {11},
 location = {Long Beach, California, USA},
-series = {NIPS'17}
+series = {NIPS'17},
+url = {https://papers.nips.cc/paper/7181-attention-is-all-you-need}
 }
 
 @inproceedings{wang2019,
@@ -231,4 +232,362 @@ series = {NIPS'17}
     doi = "10.18653/v1/W19-8623",
     pages = "164--172",
     abstract = "The uptake of deep learning in natural language generation (NLG) led to the release of both small and relatively large parallel corpora for training neural models. The existing data-to-text datasets are, however, aimed at task-oriented dialogue systems, and often thus limited in diversity and versatility. They are typically crowdsourced, with much of the noise left in them. Moreover, current neural NLG models do not take full advantage of large training data, and due to their strong generalizing properties produce sentences that look template-like regardless. We therefore present a new corpus of 7K samples, which (1) is clean despite being crowdsourced, (2) has utterances of 9 generalizable and conversational dialogue act types, making it more suitable for open-domain dialogue systems, and (3) explores the domain of video games, which is new to dialogue systems despite having excellent potential for supporting rich conversations.",
+}
+
+@inproceedings{papineni2002,
+    title = "{B}leu: a Method for Automatic Evaluation of Machine Translation",
+    author = "Papineni, Kishore  and
+      Roukos, Salim  and
+      Ward, Todd  and
+      Zhu, Wei-Jing",
+    booktitle = "Proceedings of the 40th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2002",
+    address = "Philadelphia, Pennsylvania, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P02-1040",
+    doi = "10.3115/1073083.1073135",
+    pages = "311--318",
+}
+
+@inproceedings{chen1996,
+    title = "An Empirical Study of Smoothing Techniques for Language Modeling",
+    author = "Chen, Stanley F.  and
+      Goodman, Joshua",
+    booktitle = "34th Annual Meeting of the Association for Computational Linguistics",
+    month = jun,
+    year = "1996",
+    address = "Santa Cruz, California, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P96-1041",
+    doi = "10.3115/981863.981904",
+    pages = "310--318",
+}
+
+@article{kendall1938,
+    author = {Kendall, M. G.},
+    title = "{A NEW MEASURE OF RANK CORRELATION}",
+    journal = {Biometrika},
+    volume = {30},
+    number = {1-2},
+    pages = {81-93},
+    year = {1938},
+    month = {06},
+    issn = {0006-3444},
+    doi = {10.1093/biomet/30.1-2.81},
+    url = {https://doi.org/10.1093/biomet/30.1-2.81},
+}
+
+@inproceedings{lin2004,
+    title = "{ROUGE}: A Package for Automatic Evaluation of Summaries",
+    author = "Lin, Chin-Yew",
+    booktitle = "Text Summarization Branches Out",
+    month = jul,
+    year = "2004",
+    address = "Barcelona, Spain",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W04-1013",
+    pages = "74--81",
+}
+
+
+@inproceedings{serban2016,
+author = {Serban, Iulian V. and Sordoni, Alessandro and Bengio, Yoshua and Courville, Aaron and Pineau, Joelle},
+title = {Building End-to-End Dialogue Systems Using Generative Hierarchical Neural Network Models},
+year = {2016},
+publisher = {AAAI Press},
+abstract = {We investigate the task of building open domain, conversational dialogue systems based on large dialogue corpora using generative models. Generative models produce system responses that are autonomously generated word-by-word, opening up the possibility for realistic, flexible interactions. In support of this goal, we extend the recently proposed hierarchical recurrent encoder-decoder neural network to the dialogue domain, and demonstrate that this model is competitive with state-of-the-art neural language models and backoff n-gram models. We investigate the limitations of this and similar approaches, and show how its performance can be improved by bootstrapping the learning from a larger question-answer pair corpus and from pretrained word embeddings.},
+booktitle = {Proceedings of the Thirtieth AAAI Conference on Artificial Intelligence},
+pages = {3776–3783},
+numpages = {8},
+location = {Phoenix, Arizona},
+series = {AAAI'16},
+url = {https://dl.acm.org/doi/10.5555/3016387.3016435}
+}
+
+@inproceedings{reed2018,
+    title = "Can Neural Generators for Dialogue Learn Sentence Planning and Discourse Structuring?",
+    author = "Reed, Lena  and
+      Oraby, Shereen  and
+      Walker, Marilyn",
+    booktitle = "Proceedings of the 11th International Conference on Natural Language Generation",
+    month = nov,
+    year = "2018",
+    address = "Tilburg University, The Netherlands",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W18-6535",
+    doi = "10.18653/v1/W18-6535",
+    pages = "284--295",
+    abstract = "Responses in task-oriented dialogue systems often realize multiple propositions whose ultimate form depends on the use of sentence planning and discourse structuring operations. For example a recommendation may consist of an explicitly evaluative utterance e.g. \textit{Chanpen Thai is the best option}, along with content related by the justification discourse relation, e.g. \textit{It has great food and service}, that combines multiple propositions into a single phrase. While neural generation methods integrate sentence planning and surface realization in one end-to-end learning framework, previous work has not shown that neural generators can: (1) perform common sentence planning and discourse structuring operations; (2) make decisions as to whether to realize content in a single sentence or over multiple sentences; (3) generalize sentence planning and discourse relation operations beyond what was seen in training. We systematically create large training corpora that exhibit particular sentence planning operations and then test neural models to see what they learn. We compare models without explicit latent variables for sentence planning with ones that provide explicit supervision during training. We show that only the models with additional supervision can reproduce sentence planning and discourse operations and generalize to situations unseen in training.",
+}
+
+@inproceedings{moryossef2019b,
+    title = "{S}tep-by-Step: {S}eparating Planning from Realization in Neural Data-to-Text Generation",
+    author = "Moryossef, Amit  and
+      Goldberg, Yoav  and
+      Dagan, Ido",
+    booktitle = "Proceedings of the 2019 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, Minnesota",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/N19-1236",
+    doi = "10.18653/v1/N19-1236",
+    pages = "2267--2277",
+    abstract = "Data-to-text generation can be conceptually divided into two parts: ordering and structuring the information (planning), and generating fluent language describing the information (realization). Modern neural generation systems conflate these two steps into a single end-to-end differentiable system. We propose to split the generation process into a symbolic text-planning stage that is faithful to the input, followed by a neural generation stage that focuses only on realization. For training a plan-to-text generator, we present a method for matching reference texts to their corresponding text plans. For inference time, we describe a method for selecting high-quality text plans for new inputs. We implement and evaluate our approach on the WebNLG benchmark. Our results demonstrate that decoupling text planning from neural realization indeed improves the system{'}s reliability and adequacy while maintaining fluent output. We observe improvements both in BLEU scores and in manual evaluations. Another benefit of our approach is the ability to output diverse realizations of the same input, paving the way to explicit control over the generated text structure.",
+}
+
+@inproceedings{balakrishnan2019,
+    title = "Constrained Decoding for Neural {NLG} from Compositional Representations in Task-Oriented Dialogue",
+    author = "Balakrishnan, Anusha  and
+      Rao, Jinfeng  and
+      Upasani, Kartikeya  and
+      White, Michael  and
+      Subba, Rajen",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P19-1080",
+    doi = "10.18653/v1/P19-1080",
+    pages = "831--844",
+    abstract = "Generating fluent natural language responses from structured semantic representations is a critical step in task-oriented conversational systems. Avenues like the E2E NLG Challenge have encouraged the development of neural approaches, particularly sequence-to-sequence (Seq2Seq) models for this problem. The semantic representations used, however, are often underspecified, which places a higher burden on the generation model for sentence planning, and also limits the extent to which generated responses can be controlled in a live system. In this paper, we (1) propose using tree-structured semantic representations, like those used in traditional rule-based NLG systems, for better discourse-level structuring and sentence-level planning; (2) introduce a challenging dataset using this representation for the weather domain; (3) introduce a constrained decoding approach for Seq2Seq models that leverages this representation to improve semantic correctness; and (4) demonstrate promising results on our dataset and the E2E dataset.",
+}
+
+@inproceedings{gehrmann2018,
+    title = "End-to-End Content and Plan Selection for Data-to-Text Generation",
+    author = "Gehrmann, Sebastian  and
+      Dai, Falcon  and
+      Elder, Henry  and
+      Rush, Alexander",
+    booktitle = "Proceedings of the 11th International Conference on Natural Language Generation",
+    month = nov,
+    year = "2018",
+    address = "Tilburg University, The Netherlands",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W18-6505",
+    doi = "10.18653/v1/W18-6505",
+    pages = "46--56",
+    abstract = "Learning to generate fluent natural language from structured data with neural networks has become an common approach for NLG. This problem can be challenging when the form of the structured data varies between examples. This paper presents a survey of several extensions to sequence-to-sequence models to account for the latent content selection process, particularly variants of copy attention and coverage decoding. We further propose a training method based on diverse ensembling to encourage models to learn distinct sentence templates during training. An empirical evaluation of these techniques shows an increase in the quality of generated text across five automated metrics, as well as human evaluation.",
+}
+
+@inproceedings{juraska2018,
+    title = "A Deep Ensemble Model with Slot Alignment for Sequence-to-Sequence Natural Language Generation",
+    author = "Juraska, Juraj  and
+      Karagiannis, Panagiotis  and
+      Bowden, Kevin  and
+      Walker, Marilyn",
+    booktitle = "Proceedings of the 2018 Conference of the North {A}merican Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long Papers)",
+    month = jun,
+    year = "2018",
+    address = "New Orleans, Louisiana",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/N18-1014",
+    doi = "10.18653/v1/N18-1014",
+    pages = "152--162",
+    abstract = "Natural language generation lies at the core of generative dialogue systems and conversational agents. We describe an ensemble neural language generator, and present several novel methods for data representation and augmentation that yield improved results in our model. We test the model on three datasets in the restaurant, TV and laptop domains, and report both objective and subjective evaluations of our best model. Using a range of automatic metrics, as well as human evaluators, we show that our approach achieves better results than state-of-the-art models on the same datasets.",
+}
+
+@inproceedings{castroferreira2017,
+    title = "Linguistic realisation as machine translation: Comparing different {MT} models for {AMR}-to-text generation",
+    author = "Castro Ferreira, Thiago  and
+      Calixto, Iacer  and
+      Wubben, Sander  and
+      Krahmer, Emiel",
+    booktitle = "Proceedings of the 10th International Conference on Natural Language Generation",
+    month = sep,
+    year = "2017",
+    address = "Santiago de Compostela, Spain",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W17-3501",
+    doi = "10.18653/v1/W17-3501",
+    pages = "1--10",
+    abstract = "In this paper, we study AMR-to-text generation, framing it as a translation task and comparing two different MT approaches (Phrase-based and Neural MT). We systematically study the effects of 3 AMR preprocessing steps (Delexicalisation, Compression, and Linearisation) applied before the MT phase. Our results show that preprocessing indeed helps, although the benefits differ for the two MT models.",
+}
+
+@inproceedings{castroferreira2019,
+    title = "Neural data-to-text generation: A comparison between pipeline and end-to-end architectures",
+    author = "Castro Ferreira, Thiago  and
+      van der Lee, Chris  and
+      van Miltenburg, Emiel  and
+      Krahmer, Emiel",
+    booktitle = "Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)",
+    month = nov,
+    year = "2019",
+    address = "Hong Kong, China",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/D19-1052",
+    doi = "10.18653/v1/D19-1052",
+    pages = "552--562",
+    abstract = "Traditionally, most data-to-text applications have been designed using a modular pipeline architecture, in which non-linguistic input data is converted into natural language through several intermediate transformations. By contrast, recent neural models for data-to-text generation have been proposed as end-to-end approaches, where the non-linguistic input is rendered in natural language with much less explicit intermediate representations in between. This study introduces a systematic comparison between neural pipeline and end-to-end data-to-text approaches for the generation of text from RDF triples. Both architectures were implemented making use of the encoder-decoder Gated-Recurrent Units (GRU) and Transformer, two state-of-the art deep learning methods. Automatic and human evaluations together with a qualitative analysis suggest that having explicit intermediate steps in the generation process results in better texts than the ones generated by end-to-end approaches. Moreover, the pipeline models generalize better to unseen inputs. Data and code are publicly available.",
+}
+
+@inproceedings{moryossef2019a,
+    title = "Improving Quality and Efficiency in Plan-based Neural Data-to-text Generation",
+    author = "Moryossef, Amit  and
+      Goldberg, Yoav  and
+      Dagan, Ido",
+    booktitle = "Proceedings of the 12th International Conference on Natural Language Generation",
+    month = oct # "{--}" # nov,
+    year = "2019",
+    address = "Tokyo, Japan",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W19-8645",
+    doi = "10.18653/v1/W19-8645",
+    pages = "377--382",
+    abstract = "We follow the step-by-step approach to neural data-to-text generation proposed by Moryossef et al (2019), in which the generation process is divided into a text planning stage followed by a plan realization stage. We suggest four extensions to that framework: (1) we introduce a trainable neural planning component that can generate effective plans several orders of magnitude faster than the original planner; (2) we incorporate typing hints that improve the model{'}s ability to deal with unseen relations and entities; (3) we introduce a verification-by-reranking stage that substantially improves the faithfulness of the resulting texts; (4) we incorporate a simple but effective referring expression generation module. These extensions result in a generation process that is faster, more fluent, and more accurate.",
+}
+
+@inproceedings{hongminwang2019,
+    title = "Revisiting Challenges in Data-to-Text Generation with Fact Grounding",
+    author = "Wang, Hongmin",
+    booktitle = "Proceedings of the 12th International Conference on Natural Language Generation",
+    month = oct # "{--}" # nov,
+    year = "2019",
+    address = "Tokyo, Japan",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W19-8639",
+    doi = "10.18653/v1/W19-8639",
+    pages = "311--322",
+    abstract = "Data-to-text generation models face challenges in ensuring data fidelity by referring to the correct input source. To inspire studies in this area, Wiseman et al. (2017) introduced the RotoWire corpus on generating NBA game summaries from the box- and line-score tables. However, limited attempts have been made in this direction and the challenges remain. We observe a prominent bottleneck in the corpus where only about 60{\%} of the summary contents can be grounded to the boxscore records. Such information deficiency tends to misguide a conditioned language model to produce unconditioned random facts and thus leads to factual hallucinations. In this work, we restore the information balance and revamp this task to focus on fact-grounded data-to-text generation. We introduce a purified and larger-scale dataset, RotoWire-FG (Fact-Grounding), with 50{\%} more data from the year 2017-19 and enriched input tables, and hope to attract research focuses in this direction. Moreover, we achieve improved data fidelity over the state-of-the-art models by integrating a new form of table reconstruction as an auxiliary task to boost the generation quality.",
+}
+
+@inproceedings{nie2019,
+    title = "A Simple Recipe towards Reducing Hallucination in Neural Surface Realisation",
+    author = "Nie, Feng  and
+      Yao, Jin-Ge  and
+      Wang, Jinpeng  and
+      Pan, Rong  and
+      Lin, Chin-Yew",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P19-1256",
+    doi = "10.18653/v1/P19-1256",
+    pages = "2673--2679",
+    abstract = "Recent neural language generation systems often \textit{hallucinate} contents (i.e., producing irrelevant or contradicted facts), especially when trained on loosely corresponding pairs of the input structure and text. To mitigate this issue, we propose to integrate a language understanding module for data refinement with self-training iterations to effectively induce strong equivalence between the input data and the paired text. Experiments on the E2E challenge dataset show that our proposed framework can reduce more than 50{\%} relative unaligned noise from the original data-text pairs. A vanilla sequence-to-sequence neural NLG model trained on the refined data has improved on content correctness compared with the current state-of-the-art ensemble generator.",
+}
+
+@inproceedings{kedzie2019,
+    title = "A Good Sample is Hard to Find: Noise Injection Sampling and Self-Training for Neural Language Generation Models",
+    author = "Kedzie, Chris  and
+      McKeown, Kathleen",
+    booktitle = "Proceedings of the 12th International Conference on Natural Language Generation",
+    month = oct # "{--}" # nov,
+    year = "2019",
+    address = "Tokyo, Japan",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W19-8672",
+    doi = "10.18653/v1/W19-8672",
+    pages = "584--593",
+}
+
+@inproceedings{wiseman2018,
+    title = "Learning Neural Templates for Text Generation",
+    author = "Wiseman, Sam  and
+      Shieber, Stuart  and
+      Rush, Alexander",
+    booktitle = "Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing",
+    month = oct # "-" # nov,
+    year = "2018",
+    address = "Brussels, Belgium",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/D18-1356",
+    doi = "10.18653/v1/D18-1356",
+    pages = "3174--3187",
+    abstract = "While neural, encoder-decoder models have had significant empirical success in text generation, there remain several unaddressed problems with this style of generation. Encoder-decoder models are largely (a) uninterpretable, and (b) difficult to control in terms of their phrasing or content. This work proposes a neural generation system using a hidden semi-markov model (HSMM) decoder, which learns latent, discrete templates jointly with learning to generate. We show that this model learns useful templates, and that these templates make generation both more interpretable and controllable. Furthermore, we show that this approach scales to real data sets and achieves strong performance nearing that of encoder-decoder text generation models.",
+}
+
+@inproceedings{shen2020,
+    title = "Neural Data-to-Text Generation via Jointly Learning the Segmentation and Correspondence",
+    author = "Shen, Xiaoyu  and
+      Chang, Ernie  and
+      Su, Hui  and
+      Niu, Cheng  and
+      Klakow, Dietrich",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.acl-main.641",
+    doi = "10.18653/v1/2020.acl-main.641",
+    pages = "7155--7165",
+}
+
+@inproceedings{li2020,
+    title = "Posterior Control of Blackbox Generation",
+    author = "Li, Xiang Lisa  and
+      Rush, Alexander",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/2020.acl-main.243",
+    doi = "10.18653/v1/2020.acl-main.243",
+    pages = "2731--2743",
+}
+
+@article{welch1947,
+    author = {Welch, B. L.},
+    title = "{THE GENERALIZATION OF `STUDENT'S' PROBLEM WHEN SEVERAL DIFFERENT POPULATION VARLANCES ARE INVOLVED}",
+    journal = {Biometrika},
+    volume = {34},
+    number = {1-2},
+    pages = {28-35},
+    year = {1947},
+    month = {01},
+    issn = {0006-3444},
+    doi = {10.1093/biomet/34.1-2.28},
+    url = {https://doi.org/10.1093/biomet/34.1-2.28},
+}
+
+
+@inproceedings{bahdanau2015,
+  author    = {Dzmitry Bahdanau and
+               Kyunghyun Cho and
+               Yoshua Bengio},
+  editor    = {Yoshua Bengio and
+               Yann LeCun},
+  title     = {Neural Machine Translation by Jointly Learning to Align and Translate},
+  booktitle = {3rd International Conference on Learning Representations, {ICLR} 2015,
+               San Diego, CA, USA, May 7-9, 2015, Conference Track Proceedings},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1409.0473},
+  timestamp = {Wed, 17 Jul 2019 10:40:54 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/BahdanauCB14.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{luong2015,
+    title = "Effective Approaches to Attention-based Neural Machine Translation",
+    author = "Luong, Thang  and
+      Pham, Hieu  and
+      Manning, Christopher D.",
+    booktitle = "Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing",
+    month = sep,
+    year = "2015",
+    address = "Lisbon, Portugal",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/D15-1166",
+    doi = "10.18653/v1/D15-1166",
+    pages = "1412--1421",
+}
+
+@inproceedings{rush2018,
+    title = "The Annotated Transformer",
+    author = "Rush, Alexander",
+    booktitle = "Proceedings of Workshop for {NLP} Open Source Software ({NLP}-{OSS})",
+    month = jul,
+    year = "2018",
+    address = "Melbourne, Australia",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W18-2509",
+    doi = "10.18653/v1/W18-2509",
+    pages = "52--60",
+    abstract = "A major goal of open-source NLP is to quickly and accurately reproduce the results of new work, in a manner that the community can easily use and modify. While most papers publish enough detail for replication, it still may be difficult to achieve good results in practice. This paper presents a worked exercise of paper reproduction with the goal of implementing the results of the recent Transformer model. The replication exercise aims at simple code structure that follows closely with the original work, while achieving an efficient usable system.",
 }

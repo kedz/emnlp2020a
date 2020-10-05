@@ -1,0 +1,20 @@
+\section{Discussion}
+
+One consistently worrying sign throughout the first two experiments is that the
+automatic metrics are not good indicators of semantic correctness.  For
+example the \rougel~score of the E2E \lsshort{At (Oracle)} models is about 8
+points higher than the \lsshort{At (NLM)} models, but the \lsshort{At (NLM)}
+models make fewer semantic errors. Other similar examples can be found where
+the automatic metric would suggest picking the more error prone model over
+another. As generating fluent text becomes less of a difficult a problem,
+these shallow ngram overlap methods will cease to suffice as distinguishing
+criteria.
+
+The second experiments also reveal limitations in the controllable model's
+ability to follow arbitrary orderings. The biGRU and Transformer models in the
+small-data ViGGO setting are not able to generalize effectively on
+non-training distribution utterance plans. BART performance is much
+better here, but is still hovering around 2\% SER and only roughly 88\% of
+ouputs conform to the intended utterance plan.  Thankfully, if an exact
+ordering is not required, using the \NUP~to propose an order leads to more
+semantically correct outputs.

@@ -1,0 +1,35 @@
+\section{Neural Utterance Planner Model and Hyper-Parameter Search}
+\label{app:ndp}
+
+\input{tables/app_ndp.tex}
+
+We use the same general recurrent neural network 
+model as defined in \autoref{app:hps} with Bahdanau style attention
+\cite{bahdanau2015}
+to implement the neural utterance planner model. 
+We trained for at most 50 epochs
+with batch size 128. We used the Adam optimizer with 0.0 weight decay. Decoder input/output 
+embeddings
+were not tied.
+Models used embeddings and hidden layers of 512 dimensions.
+Models were trained to map \lsshort{If} inputs to \lsshort{At} outputs.
+We grid-searched over the following hyper-parameters:
+\begin{itemize}
+    \item \textbf{Layers:} 1, 2 
+    \item \textbf{Learning Rate:} $10^{-3}, 10^{-4}, 10^{-5}$ 
+    \item \textbf{RNN cell:} GRU, LSTM
+    \item \textbf{Bidirectional Encoder:} uni, bi
+    \item \textbf{Label Smoothing:} 0.0, 0.1
+\end{itemize}
+with the following winning settings determined by Kendall's $\tau$
+on the validation set:
+
+\begin{itemize}
+    \item E2E --- 1 layers, biLSTM, lr $=10^{-5}$, 0.1 label smoothing
+    \item ViGGO --- 1 layer, uniLSTM, lr $=10^{-4}$, 0.1 label smoothing
+\end{itemize}
+
+
+Validation and test set Kendall's $\tau$ are shown in \autoref{app:ndp_tau}.
+
+%

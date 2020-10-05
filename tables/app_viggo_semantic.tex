@@ -1,0 +1,44 @@
+\begin{table*}[t!]
+\centering
+
+\begin{tabular}{lll c c c c  c c c}
+\toprule
+ & & &  \multicolumn{7}{c}{Manual Semantic Metrics} \\
+ \cmidrule(lr){4-10} 
+ \multicolumn{3}{c}{Model} &  Missing &  Wrong & Added & Total & SER$\downarrow$ & OA$\uparrow$ & Perf.$\uparrow$\\
+ \midrule
+ \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
+ &\textsc{Rnd} & &85.8&10.0&89.6&185.4&12.58&---&70.06 \\
+ &\textsc{Fp} & &121.8&27.2&103.6&252.6&17.12&---&60.56 \\
+ &\textsc{If} & &124.0&9.4&149.4&282.8&19.20&---&62.14 \\
+ &  & \textsc{+p}&93.2&5.0&85.0&183.2&12.46&---&70.36 \\
+ &\textsc{At +BgDP} & &31.4&\textbf{  4.8}&13.8&50.0&3.40&89.82&89.82 \\
+ &\textsc{At +NDP} & &\textbf{  7.2}&5.2&10.8&\textbf{ 23.2}&\textbf{ 1.58}&93.72&93.72 \\
+ &  & \textsc{+p}&11.8&6.0&\textbf{  6.0}&23.8&1.60&\textbf{94.26}&\textbf{94.26} \\
+ &\textsc{At (Oracle)} & &12.2&12.6&11.0&35.8&2.42&92.22&92.34 \\
+ \midrule
+ \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
+ &\textsc{Rnd} & &90.6&11.4&40.2&142.2&9.62&---&70.98 \\
+ &\textsc{Fp} & &88.0&16.6&23.8&128.4&8.70&---&72.24 \\
+ &\textsc{If} & &76.8&10.6&23.2&110.6&7.50&---&74.88 \\
+ &  & \textsc{+p}&49.4&7.4&8.8&65.6&4.46&---&84.90 \\
+ &\textsc{At +BgDP} & &49.8&\textbf{  5.6}&13.2&68.6&4.66&79.18&85.22 \\
+ &\textsc{At +NDP} & &23.2&6.6&9.8&39.6&2.68&88.38&89.64 \\
+ &  & \textsc{+p}&\textbf{ 22.4}&6.4&\textbf{  8.4}&\textbf{ 37.2}&\textbf{ 2.52}&\textbf{89.04}&\textbf{90.80} \\
+ &\textsc{At (Oracle)} & &39.6&10.8&9.8&60.2&4.08&83.02&85.92 \\
+ \midrule
+ \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
+ &\textsc{Rnd} & &0.8&3.2&17.6&21.6&1.50&---&94.52 \\
+ &\textsc{Fp} & &1.0&3.0&21.0&25.0&1.68&---&93.26 \\
+ &\textsc{If} & &\textbf{  0.2}&2.2&25.2&27.6&1.86&---&92.82 \\
+ &  & \textsc{+p}&2.6&2.8&20.8&26.2&1.78&---&93.60 \\
+ &\textsc{At +BgDP} & &0.6&\textbf{  1.2}&6.0&\textbf{  7.8}&\textbf{ 0.52}&\textbf{98.30}&\textbf{98.36} \\
+ &\textsc{At +NDP} & &0.6&\textbf{  1.2}&6.2&8.0&0.54&98.18&98.18 \\
+ &  & \textsc{+p}&3.8&7.6&\textbf{  2.4}&13.8&0.92&96.40&96.40 \\
+ &\textsc{At (Oracle)} & &1.6&1.8&8.4&11.8&0.80&97.22&97.40 \\
+ \midrule
+ \end{tabular}
+
+\caption{ViGGO test set semantic error evaluation.}
+\label{app:viggo.sem}
+\end{table*}

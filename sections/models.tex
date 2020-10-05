@@ -1,0 +1,59 @@
+\section{Models}
+
+\subsection{Generation Models}
+
+We examine the effects of linearization strategy and data augmentation on a
+bidirectional GRU with attention (\biGRU) and \Transformer-based S2S models.
+Hyper-parameters were found using grid-search, selecting the model with best
+validation \bleu~\cite{papineni2002} score. We performed a separate
+grid-search for each architecture-linearization strategy pairing in case there
+was no one best hyper-parameter setting.  
+
+Additionally, we fine-tune BART \cite{lewis2020}, a large pretrained
+Transformer-based S2S model. We stop fine-tuning after validation set
+cross-entropy stops decreasing.
+
+Complete architecture specification, hyper-parameter search space, and
+validation results for all three models can be found in \autoref{app:hps}.
+
+\paragraph{Decoding}
+
+When decoding at test time, we use beam search with a beam size of eight.
+Beam candidates are ranked by length normalized log likelihood.  Similar to
+\citet{dusek2019} and \citet{juraska2019} we rerank the beam output to
+maximize the $F$-measure of correctly generated attribute-values using the
+matching-rules described in \autoref{sec:align}.
+
+For models using the  \lsshort{Rnd} linearization, at test time, we sample
+five random MR orderings and generate beam candidates for each. Reranking is
+then performed on the union of beam candidates. 
+
+\subsection{Utterance Planner Model} We experiment with three approaches to
+creating a test-time utterance plan for the \lsshort{At} trained models. The
+first is a bigram language model (\BgUP) over attribute-value sequences.
+Attribute-value bigram counts are estimated from the training data 
+(using Lidstone smoothing \cite{chen1996} with $\lidstone=10^{-6}$)  according to the
+ordering determined by the matching rules (i.e. the \lsshort{At} ordering). 
+
+The second model is a \biGRU~based S2S model, which we refer to as the neural
+utterance planner (\NUP). We train the \NUP~to map \lsshort{If} ordered
+attribute-values to the \lsshort{At} ordering. We grid-search model
+hyper-parameters, selecting the model with highest average Kendall's $\tau$
+\cite{kendall1938} on the validation set \lsshort{At} orderings. See
+\autoref{app:ndp} for hyperparameter/model specification details. Unlike the
+\BgUP~model, the \NUP~model also conditions on the dialogue act, so it can
+learn ordering preferences that differ across dialogue acts.
+
+For both \BgUP~and \NUP, we use beam search (with beam size 32) to generate
+candidate utterance plans. The beam search is constrained to only generate
+attribute-value pairs that are given in the supplied MR, and to avoid
+generating repeated attributes. The search is not allowed to terminate until
+all attribute-values in the MR are generated.  Beam candidates are ranked by
+log likelihood.
+
+The final ordering we propose is the \Oracle~ordering, i.e. the utterance plan
+implied by the human-authored test-set reference utterances. This plan
+represents the model performance if it had \textit{a priori}  knowledge of the
+reference utterance plan. When a test example has multiple references, we
+select the most frequent ordering in the references, breaking ties according
+to \BgUP~log-likelihood.

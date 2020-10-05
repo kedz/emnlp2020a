@@ -1,0 +1,29 @@
+\begin{figure}
+    \resizebox{.48\textwidth}{!}{%
+        \begin{tabular}{l}
+            \toprule
+            $\lin\left(\mr\right) = \left[\textrm{inform}, 
+                \textrm{name=Aromi}, \textrm{eat\_type=coffee shop}, 
+                \textrm{area=city centre} \right]$\\
+            $\hat{\utt} = \textit{Aromi is a coffee shop in the city 
+                centre.}$\\
+            \midrule
+            $\lin\left(\mr\right) = \left[\textrm{inform}, 
+                \textrm{eat\_type=coffee shop}, \textrm{name=Aromi}, 
+                \textrm{area=city centre} \right]$\\
+            $\hat{\utt} = \textit{There is a coffee shop called Aromi in the 
+                city centre.}$\\
+            \midrule
+            $\lin\left(\mr\right) = \left[\textrm{inform}, 
+                \textrm{eat\_type=coffee shop}, \textrm{area=city centre}, 
+                \textrm{name=Aromi} \right]$\\
+            $\hat{\utt} = \textit{For coffee in the centre of the city, try 
+                Aromi.}$\\
+            \bottomrule
+        \end{tabular}
+    }
+    \caption{\color{red}Example outputs ($\hat{\utt}$) from a controllable model, 
+i.e. a S2S model trained with \lsshort{At} linearization, 
+under different input utterance plans ($\lin\left(\mr\right)$).}
+\label{fig:ctrlouts}
+\end{figure}

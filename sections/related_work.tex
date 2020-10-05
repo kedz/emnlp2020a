@@ -1,0 +1,74 @@
+\section{Related Work}
+\label{sec:relatedwork}
+
+MR linearizations for S2S models have been studied in a
+variety of prior works. \citet{nayak2017} explore several ways of incorporating
+sentence planning into an MR linearization for S2S models, comparing a flat
+alignment order (equivalent to the alignment order used in this paper)
+against various sentence level groupings.  \citet{reed2018} add additional
+sentence and discourse structuring variables to indicate contrasts or
+sentential groupings.  \citet{balakrishnan2019} experiment
+both with tree structured MRs and encoders and compare them to linearized trees
+with standard S2S models. They also find that properly
+aligned linearization can lead to a controllable generator.
+%\citet{moryossef2019} develop a planning model and train an S2S model to
+%follow it.  
+These papers do not, however, explore how other linearization
+strategies compare in terms of faithfulness, and they do not evaluate the
+degree to which a S2S model can follow realization orders not drawn from the
+training distribution.
+
+{\color{red}\citet{castroferreira2017} compare a S2S NLG model using various
+linearizations of abstract meaning representation (AMR) graphs, including a
+model-based alignment very similar to the \lsshort{At} linearization presented
+in this work. However, they evaluate only on automatic quality measures and do
+not explicitly measure the semantic correctness of the generated text or the
+degree to which the model realizes the text in the order implied by the
+linearized input.}
+
+{\color{red}Works like \citet{moryossef2019a,moryossef2019b} and
+\citet{castroferreira2019} show that treating various planning tasks as
+separate components in a pipeline, where the components themselves are
+implemented with neural models, improves the overall quality and semantic
+correctness of generated utterances relative to a completely end-to-end neural
+NLG model. However, they do not test the systematicty of the neural generation
+components, i.e. the ability to perform correctly when given an arbitrary or
+random input from the preceding component, as we do here with the random
+permutation stress test experiments. }
+
+
+%
+%First, in the 2017 paper, they compare a neural seq2seq model when using the
+%depth first or model based alignment linearization for encoding the input.
+%While their alignment model is analogous to our alignment training
+%linearization, they evaluate only on automatic quality measures and do not
+%explicitly measure the semantic correctness of the generated text or the
+%degree to which the model realizes the text in the order implied by the
+%linearized input.
+
+
+Other papers mention linearization order anecdottally but do quantify its
+impact. For example, \citet{juraska2018} experiment with random
+linearization orderings during development, but do not use them in the final
+model or report results using them, and \citet{gehrmann2018} report that
+using a consistent linearization strategy worked best for their models but do
+not specify the exact order.  \citet{juraska2018} also used sentence
+level data augmentation, i.e. splitting a multi-sentence example in multiple
+single sentence examples, similar in spirit to our proposed phrase based
+method, but they do not evaluate its effect independently.
+
+
+%\citet{wiseman2018learning} uses an order invariate encoder to produce a latent
+%plan which guides the decoder. Ignoring the encoder and specifying 
+%a latent plan would allow for some control over realization order but 
+%the degree to which arbitrary realization orders can be achieved is
+%under explored. Additionally, it is not guaranteed that latent plan
+%states uniquely correspond to MR components.
+
+%Their model offers some control over the output ordering by way of 
+%model ensembling but the exact degree of controlabilily is not extensively
+%explored and relying on separate models for plan realization is probably
+%not scalable.
+%
+
+

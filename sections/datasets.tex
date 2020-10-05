@@ -7,45 +7,46 @@ Challenge} corpus \cite{novikova2017} and the
 datasets provide MR/utterance pairs from the restaurant and video game
 domains, respectively. Examples from the E2E corpus (33,523 train/1,426
 dev/630 test) can have up to eight unique attributes.  There is only one
-dialog act for the corpus, \DA{Inform}.  Attribute-values are either binary or
-categorical valued.
+dialogue act for the corpus, \DA{Inform}.  Attribute-values are either binary
+or categorical valued.
 
 The ViGGO corpus (5,103 train/246 dev/359 test) contains 14 attribute types
-and nine dialog acts (\DA{Request Explanation}, \DA{Recommend}, etc.).  In
+and nine dialogue acts. %(\DA{Request Explanation}, \DA{Recommend}, etc.).  
+In
 addition to binary and categorical valued attributes, the corpus also features
 list-valued attributes (see the \Atr{genres} attribute in
-\autoref{fig:exviggo}) which can have a variable number of values, and an
-open-class \Atr{specifier} attribute. 
+\autoref{fig:examples}) which can have a variable number of values, and an
+open-class \Atr{specifier} attribute (see \autoref{app:specifier} for details). 
 
-\subsection{MR/Utterance Alignments}
-\label{sec:align}
+\subsection{MR/Utterance Alignments} \label{sec:align}
 
 The original datasets do not have alignments between individual
 attribute-values and the subspans of the utterances they occur in, which we
 need for the \lsshort{At} linearization strategy.  We manually developed a
 list of heuristic pattern matching rules (e.g. \textit{not kid-friendly}
-$\rightarrow$ \AV{family\_friendly}{no}).  For ViGGO, we started from
-scratch, but for E2E we greatly expanded the rule-set created by
-\citet{dusek2019}.  To ensure the correctness of the rules, we
-iteratively added new matching rules, ran them on the training and validation
-sets, and verified that they produced the same MR as was provided in the
-dataset. This process took one author roughly two weeks to produce
-approximately 25,000 and 1,500 rules for the E2E and ViGGO datasets
-respectively. Note that the large number of rules is obtained
-programmatically, i.e. creating template rules and inserting matching keywords
-or phrases (e.g., enumerating variants such as \textit{not kid-friendly},
-\textit{non kid-friendly}, \textit{not family-friendly}, etc.).
+$\rightarrow$ \AV{family\_friendly}{no}).  For ViGGO, we started from scratch,
+but for E2E we greatly expanded the rule-set created by \citet{dusek2019}.  To
+ensure the correctness of the rules, we iteratively added new matching rules,
+ran them on the training and validation sets, and verified that they produced
+the same MR as was provided in the dataset. This process took one author
+roughly two weeks to produce approximately 25,000 and 1,500 rules for the E2E
+and ViGGO datasets respectively. Note that the large number of rules is
+obtained programmatically, i.e. creating template rules and inserting matching
+keywords or phrases (e.g., enumerating variants such as \textit{not
+kid-friendly}, \textit{non kid-friendly}, \textit{not family-friendly}, etc.).
 
 In cases where the matching rules produced different MRs than provided in the
 original dataset, we manually checked them. In many cases on the E2E dataset
 and several times on ViGGO, we found the rule to be correct and the MR to be
-incorrect for the given utterance. In those cases we used the corrected MRs
-for the training and validation. To maintain comparability to prior work, we
+incorrect for the given utterance. In those cases, we used the corrected MRs
+for training and validation. To maintain comparability to prior work, we
 do not modify the test sets in any way. Using the matching rules, we can
 determine alignments between the provided MR and the realized utterances.
 
 For most cases, the attribute-values uniquely correspond to an non-overlapping
 subspan of the utterance. The \Atr{rating} attribute in the ViGGO dataset,
 however, could have multiple reasonable mappings to the utterance, so we treat
-it in practice like an addendum to dialog act, occuring directly after the
-dialog act as part of a ``header'' section in any  MR linearization strategy.
+it in practice like an addendum to dialogue act, occuring directly after the
+dialogue act as part of a ``header'' section in any  MR linearization strategy
+(see \autoref{fig:linstrats} where \AV{rating}{N/A} occurs after the dialogue
+act regardless of choice of linearization strategy).

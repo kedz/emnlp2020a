@@ -1,20 +1,24 @@
 \section{Introduction}
 
-In this work, we study the degree to which sequence-to-sequence (S2S) models
-exhibit fine-grained controllability when performing natural language
+In this work, we study the degree to which neural sequence-to-sequence (S2S)
+models exhibit fine-grained controllability when performing natural language
 generation (NLG) from a meaning representation (MR).  In particular, we focus
 on an  S2S approach that respects the realization ordering constraints of a
-given utterance plan; such a model can generate phrase orderings indicated by
-the input plan. 
-
+given utterance plan; such a model can generate utterances whose phrases
+follow the order of the provided plan.
+%phrase orderings 
+%as indicated by
+%the utterance plan. 
 
 In non-neural NLG, fine-grained control of the text generation process has
 received extensive study under the names \textit{sentence} or
 \textit{micro-planning} \cite{reiter2000,walker2001,stone2003}.  Contemporary
 practice, however, eschews modeling at this granularity, instead preferring to
 train an S2S model to directly map an input MR to a natural language
-utterance, with the sentence plan determined implicitly by the patterns
-exhibited in the training data and the model's decoder \cite{dusek2020}. 
+utterance, with the utterance plan determined implicitly by the model
+which is learned from the training data \cite{dusek2020}.
+%the patterns
+%exhibited in the training data and the model's decoder \cite{dusek2020}. 
 
 We argue that robust and fine grained control in an S2S model is desirable
 because it enables neural implementations of various psycho-linguistic
@@ -27,22 +31,21 @@ language production.
 
 In this paper, we study controllability in the context of task-oriented
 dialogue generation \cite{mairesse2010,wen2015}, where the input to the NLG
-model is an MR consisting of a dialog act (i.e. a communicative goal) such as
+model is an MR consisting of a dialogue act (i.e. a communicative goal) such as
 to \DA{Request Explanation}, and an unordered set of attribute-value pairs
 defining the semantics of the intended utterance (see \autoref{fig:examples}
-for examples). 
+for an example). 
 
 
 The NLG model is expected to produce an utterance that adequately and
 faithfully communicates the MR.  In the S2S paradigm, the MR must be
 ``linearized'' (i.e.  represented as a linear sequence of tokens corresponding
-to the dialog act and attribute-value pairs) before being presented to the S2S
-models's encoder.  We explore several linearization strategies and measure
-their effectiveness for controlling phrase order as well as their effect on
-the faithfulness (i.e., the semantic correctness of the generated utterance)
-of the underlying model.
+to the dialogue act and attribute-value pairs) before being presented to the S2S
+ encoder.  We explore several linearization strategies and measure
+their effectiveness for controlling phrase order, as well as their effect on
+ model faithfulness (i.e., the semantic correctness of generated utterances).
 
-Of particular note, alignment training (i.e.  at training time, linearizing
+ Of particular note, \textit{alignment training} (i.e.  at training time, linearizing
 the attribute-value pairs according to the order in which they are realized by
 their corresponding reference utterance) produces highly controllable  S2S
 models.  While we are not the first to observe this (c.f., \citet{nayak2017}),
@@ -67,7 +70,7 @@ data augmentation improves the robustness of the control} even on arbitrary
 and difficult to follow utterance plans. (3) We conclude with a human
 evaluation that shows that \textbf{phrase-based data augmentation training
 can increase the robustness of control without hurting fluency.}\footnote{
-    Code, model outputs, augmented data, and other materials will be 
-released on publication.}
+    Code, outputs, augmented data, and other materials 
+    can be found here: \url{https://github.com/kedz/cmr2text}.}
 
 

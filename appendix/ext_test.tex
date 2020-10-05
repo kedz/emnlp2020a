@@ -1,0 +1,24 @@
+\section{Expanded Test Set Results}
+\label{app:exp.results}
+
+
+We show full automatic evaluation metrics from the E2E official
+evaluation script. E2E and ViGGO results are shown in \autoref{app:e2e.auto}
+and \autoref{app:viggo.auto} respectively.
+We also show full manual semantic evaluation results in \autoref{app:e2e.sem}
+and \autoref{app:viggo.sem} for E2E and ViGGO respectively.
+We break out the counts of missing, wrong, and added attributes used for SER
+calculation. Wrong attributes occur when an attribute is realized with 
+the wrong value. Added attribute indicate the model realized an attribute-value
+that was not given in the input MR. Repeated attributes, even when specified
+in the input MR are included in added counts.
+We also include the percentage of utterances with correct
+semantics regardless of order (Perf.).
+
+\input{tables/app_e2e_auto.tex}
+
+\input{tables/app_viggo_auto.tex}
+
+\input{tables/app_e2e_semantic.tex}
+\input{tables/app_viggo_semantic.tex}
+
