@@ -15,9 +15,9 @@ statistics.
 
 Because we reclassify the MR of phrases using the matching rules, the
 augmented  data includes examples of how to invert binary attributes, e.g.
-from the phrase ``\U{is not on Mac,}'' which implies
+from the phrase ``\U{is not on Mac,}'' which denotes
 \AV{has\_mac\_release}{no,} we obtain the phrase ``\U{on Mac}''
-which implies \AV{has\_mac\_release}{yes.} When presenting the linearized
+which denotes \AV{has\_mac\_release}{yes.} When presenting the linearized
 MR of phrase examples to the model encoder we prepend and append phrase
 specific \textit{start} and \textit{stop} tokens respectively (e.g.,
 \textit{start-NP} and \textit{stop-NP}) to discourage the model from ever

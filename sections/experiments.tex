@@ -4,7 +4,7 @@
 
 In our first experiment, we compare performance of the proposed models and
 linearization strategies on the E2E and ViGGO test sets. For the \lsshort{If}
-and \lsshort{At (NUP)} models we also include variants trained on
+and \lsshort{At+NUP} models we also include variants trained on
 the union of original training data and phrase-augmented data (see
 \autoref{sec:dataaug}), which we denote \phraseAug.
 
@@ -25,10 +25,10 @@ the provided utterance plan. Utterances with wrong or added attribute values
 are counted as not following the utterance plan. Additional metrics
 and SER error break downs can be found in \autoref{app:exp.results}.
 
-{\color{red}All models are trained five times with different random seeds; we report
+All models are trained five times with different random seeds; we report
 the mean of all five runs. We report statistical significance
 using Welch's $t$-test \cite{welch1947}, comparing the score distribution of the five runs from the best linearization strategy against all other strategies
-at the $0.05$ level.}
+at the $0.05$ level.
 
 \paragraph{Baselines} On the ViGGO dataset we compare to the Transformer
 baseline of \citet{juraska2019}, which used a beam search of size 10 and
@@ -62,7 +62,7 @@ ViGGO we generate permutations of size $3,4,\ldots,10$ (96\% of the ViGGO
 training examples fall within this range). For each size we generated 100
 random permutations and all generated plans were given the \DA{Inform}
 dialogue act. In addition to running the \lsshort{At} models on these random
-permutations, we also compare them to same model after using the NUP  to
+permutations, we also compare them to the same model after using the NUP  to
 reorder them into an easier\footnote{Easier in the sense that the
 \NUP~re-ordering is closer to the training set distribution of \lsshort{At}
 utterance plans.} ordering.  Example outputs can be

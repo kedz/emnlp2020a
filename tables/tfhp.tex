@@ -1,0 +1,27 @@
+\begin{table*}
+\center
+\begin{tabular}{clccc ccc}
+\toprule
+&Model & Layers & LS & Emb. & Params & Train Time \\
+\midrule
+    \parbox[t]{2mm}{\multirow{6}{*}{\rotatebox[origin=c]{90}{E2E}}} 
+ & \lsshort{Rnd} & 1 & 0.1 & tied & 7,966,787 & 18.09 \\
+ & \lsshort{Fp} & 1 & 0.1 & tied & 7,970,371 & 17.30 \\
+ & \lsshort{If} & 1 & 0.1 & untied & 8,525,379 & 17.52 \\
+ & \lsshort{If+p} & 1 & 0.1 & untied & 8,525,379 & 28.11 \\
+ & \lsshort{At} & 2 & 0.1 & untied & 15,881,795 & 23.73 \\
+ & \lsshort{At+p} & 2 & 0.1 & untied & 15,881,795 & 29.39 \\
+\midrule
+    \parbox[t]{2mm}{\multirow{6}{*}{\rotatebox[origin=c]{90}{ViGGO}}} 
+ & \lsshort{Rnd} & 2 & 0.0 & untied & 15,598,897 & 11.22 \\
+ & \lsshort{Fp} & 2 & 0.1 & untied & 15,605,041 & 9.68 \\
+ & \lsshort{If} & 2 & 0.1 & untied & 15,598,897 & 11.35 \\
+ & \lsshort{If+p} & 2 & 0.1 & untied & 15,598,897 & 9.09 \\
+ & \lsshort{At} & 2 & 0.1 & untied & 15,598,897 &7.26 \\
+ & \lsshort{At+p} & 2 & 0.1 & untied & 15,598,897 &5.87 \\
+\bottomrule
+\end{tabular}
+
+\caption{Winning hyperparameter settings for Transformer models (trained from scratch). LS indicates label smoothing. Train time is in hours.}
+\label{tab:tfparams}
+\end{table*}

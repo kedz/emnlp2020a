@@ -2,40 +2,76 @@
     \centering
 
 
+%\begin{tabular}{ll cccc}
+%\toprule
+%\multicolumn{2}{c}{Model}  &    B$\uparrow$ & R$\uparrow$ & SER$\downarrow$ & OA$\uparrow$    \\
+%\midrule
+%\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
+% & \textsc{\small{Rnd}} &  47.8&59.5&1.84&--- \\
+% & \textsc{\small{Fp}} &  49.1&60.3&1.90&--- \\
+% & \textsc{\small{If}} &  48.4&59.9&3.86&--- \\
+% & \textsc{\small{If +p}} &  48.1&60.0&1.12&--- \\
+% & \textsc{\small{At +BgDP}} &  44.2&57.4&0.14&99.0 \\
+% & \textsc{\small{At +NDP}} &  48.8&61.2&0.02&99.8 \\
+% & \textsc{\small{At +NDP +p}} &  48.7&61.1&0.02&99.8 \\
+% & \textsc{\small{At Oracle}} &  56.9&73.2&0.18&99.2 \\
+%\midrule
+%\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
+% & \textsc{\small{Rnd}} &  47.8&59.4&2.26&--- \\
+% & \textsc{\small{Fp}} &  49.2&60.6&2.84&--- \\
+% & \textsc{\small{If}} &  49.7&60.9&1.46&--- \\
+% & \textsc{\small{If +p}} &  48.9&60.7&1.00&--- \\
+% & \textsc{\small{At +BgDP}} &  44.9&57.4&0.28&98.3 \\
+% & \textsc{\small{At +NDP}} &  49.3&61.3&0.10&99.4 \\
+% & \textsc{\small{At +NDP +p}} &  48.8&61.1&0.08&99.6 \\
+% & \textsc{\small{At Oracle}} &  56.9&73.1&0.48&97.5 \\
+%\midrule
+%\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
+% & \textsc{\small{Rnd}} &  46.9&59.5&0.48&--- \\
+% & \textsc{\small{Fp}} &  48.6&60.3&0.04&--- \\
+% & \textsc{\small{If}} &  48.2&60.3&0.18&--- \\
+% & \textsc{\small{If +p}} &  47.8&60.1&0.46&--- \\
+% & \textsc{\small{At +BgDP}} &  45.9&57.3&0.00&99.9 \\
+% & \textsc{\small{At +NDP}} &  49.0&61.2&0.02&99.8 \\
+% & \textsc{\small{At +NDP +p}} &  48.8&61.1&0.02&99.8 \\
+% & \textsc{\small{At Oracle}} &  55.7&72.8&0.20&99.0 \\
+%\bottomrule
+%\end{tabular}
+
 \begin{tabular}{ll cccc}
-\toprule
-\multicolumn{2}{c}{Model}  &    B$\uparrow$ & R$\uparrow$ & SER$\downarrow$ & OA$\uparrow$    \\
-\midrule
-\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
- & \textsc{\small{Rnd}} &  47.8&59.5&1.84&--- \\
- & \textsc{\small{Fp}} &  49.1&60.3&1.90&--- \\
- & \textsc{\small{If}} &  48.4&59.9&3.86&--- \\
- & \textsc{\small{If +p}} &  48.1&60.0&1.12&--- \\
- & \textsc{\small{At +BgDP}} &  44.2&57.4&0.14&99.0 \\
- & \textsc{\small{At +NDP}} &  48.8&61.2&0.02&99.8 \\
- & \textsc{\small{At +NDP +p}} &  48.7&61.1&0.02&99.8 \\
- & \textsc{\small{At Oracle}} &  56.9&73.2&0.18&99.2 \\
-\midrule
-\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
- & \textsc{\small{Rnd}} &  47.8&59.4&2.26&--- \\
- & \textsc{\small{Fp}} &  49.2&60.6&2.84&--- \\
- & \textsc{\small{If}} &  49.7&60.9&1.46&--- \\
- & \textsc{\small{If +p}} &  48.9&60.7&1.00&--- \\
- & \textsc{\small{At +BgDP}} &  44.9&57.4&0.28&98.3 \\
- & \textsc{\small{At +NDP}} &  49.3&61.3&0.10&99.4 \\
- & \textsc{\small{At +NDP +p}} &  48.8&61.1&0.08&99.6 \\
- & \textsc{\small{At Oracle}} &  56.9&73.1&0.48&97.5 \\
-\midrule
-\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
- & \textsc{\small{Rnd}} &  46.9&59.5&0.48&--- \\
- & \textsc{\small{Fp}} &  48.6&60.3&0.04&--- \\
- & \textsc{\small{If}} &  48.2&60.3&0.18&--- \\
- & \textsc{\small{If +p}} &  47.8&60.1&0.46&--- \\
- & \textsc{\small{At +BgDP}} &  45.9&57.3&0.00&99.9 \\
- & \textsc{\small{At +NDP}} &  49.0&61.2&0.02&99.8 \\
- & \textsc{\small{At +NDP +p}} &  48.8&61.1&0.02&99.8 \\
- & \textsc{\small{At Oracle}} &  55.7&72.8&0.20&99.0 \\
-\bottomrule
+    \toprule
+    \multicolumn{2}{c}{Model}  &    B$\uparrow$ & R$\uparrow$ & SER$\downarrow$ & OA$\uparrow$    \\
+    \midrule
+    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
+     & \textsc{\small{Rnd}} &  47.8&59.5&1.84&--- \\
+     & \textsc{\small{Fp}} &  49.1&60.3&1.90&--- \\
+     & \textsc{\small{If}} &  48.4&59.9&3.86&--- \\
+     & \textsc{\small{If+p}} &  48.1&60.0&1.12&--- \\
+     & \textsc{\small{At+BgUP}} &  44.2&57.4&0.14&99.0 \\
+     & \textsc{\small{At+NUP}} &  48.8&61.2&0.02&99.8 \\
+     & \textsc{\small{At+NUP+p}} &  48.7&61.1&0.02&99.8 \\
+     & \textsc{\small{At Oracle}} &  56.9&73.2&0.18&99.2 \\
+    \midrule
+    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
+     & \textsc{\small{Rnd}} &  47.8&59.4&2.26&--- \\
+     & \textsc{\small{Fp}} &  49.2&60.6&2.84&--- \\
+     & \textsc{\small{If}} &  49.7&60.9&1.46&--- \\
+     & \textsc{\small{If+p}} &  48.9&60.7&1.00&--- \\
+     & \textsc{\small{At+BgUP}} &  44.9&57.4&0.28&98.3 \\
+     & \textsc{\small{At+NUP}} &  49.3&61.3&0.10&99.4 \\
+     & \textsc{\small{At+NUP+p}} &  48.8&61.1&0.08&99.6 \\
+     & \textsc{\small{At Oracle}} &  56.9&73.1&0.48&97.5 \\
+    \midrule
+    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
+     & \textsc{\small{Rnd}} &  46.9&59.5&0.48&--- \\
+     & \textsc{\small{Fp}} &  48.6&60.3&0.04&--- \\
+     & \textsc{\small{If}} &  48.2&60.3&0.18&--- \\
+     & \textsc{\small{If+p}} &  47.8&60.1&0.46&--- \\
+     & \textsc{\small{At+BgUP}} &  45.9&57.3&0.00&99.9 \\
+     & \textsc{\small{At+NUP}} &  49.0&61.2&0.02&99.8 \\
+     & \textsc{\small{At+NUP+p}} &  48.8&61.1&0.02&99.8 \\
+     & \textsc{\small{At Oracle}} &  55.7&72.8&0.20&99.0 \\
+    \bottomrule
 \end{tabular}
 
 

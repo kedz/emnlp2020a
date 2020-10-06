@@ -18,15 +18,15 @@ strategies compare in terms of faithfulness, and they do not evaluate the
 degree to which a S2S model can follow realization orders not drawn from the
 training distribution.
 
-{\color{red}\citet{castroferreira2017} compare a S2S NLG model using various
+\citet{castroferreira2017} compare a S2S NLG model using various
 linearizations of abstract meaning representation (AMR) graphs, including a
 model-based alignment very similar to the \lsshort{At} linearization presented
 in this work. However, they evaluate only on automatic quality measures and do
 not explicitly measure the semantic correctness of the generated text or the
 degree to which the model realizes the text in the order implied by the
-linearized input.}
+linearized input.
 
-{\color{red}Works like \citet{moryossef2019a,moryossef2019b} and
+Works like \citet{moryossef2019a,moryossef2019b} and
 \citet{castroferreira2019} show that treating various planning tasks as
 separate components in a pipeline, where the components themselves are
 implemented with neural models, improves the overall quality and semantic
@@ -34,7 +34,7 @@ correctness of generated utterances relative to a completely end-to-end neural
 NLG model. However, they do not test the systematicty of the neural generation
 components, i.e. the ability to perform correctly when given an arbitrary or
 random input from the preceding component, as we do here with the random
-permutation stress test experiments. }
+permutation stress test.% experiments. 
 
 
 %

@@ -12,9 +12,9 @@ We study four linearization strategies, \lsname{(i) random}, \lsname{(ii)
 increasing-frequency}, \lsname{(iii) fixed-position}, and \lsname{(iv)
 alignment training}, which we describe below. For visual examples of each
 strategy, see \autoref{fig:linstrats}.  Note that linearization determines the
-order of the attribute-values presented to the S2S encoder, and \textbf{only} in the
+order of the attribute-value pairs presented to the S2S encoder, and \textbf{only} in the
 case of alignment training does it correspond to the order in which the
-attribute-values are realized in the utterance. When presenting a linearized
+attribute-value pairs are realized in the utterance. When presenting a linearized
 MR to the model encoder, we always prepend and append distinguished
 \textit{start} and \textit{stop} tokens respectively.
 
@@ -82,7 +82,7 @@ cannot specify a linearization. However, models trained with \lsshort{At}
 can generate an  utterance from an arbitrary utterance plan
 $\attr_1, \attr_2, \ldots, \attr_{\size{\mr}}$ 
 provided by an external source, such as an utterance planner model or human 
-reference. {\color{red}See \autoref{fig:ctrlouts} for an example how an \lsshort{At}-trained model might follow three different plans for the same MR.}
+reference. See \autoref{fig:ctrlouts} for an example of how an \lsshort{At}-trained model might follow three different plans for the same MR.
 %%  %. We refer to such an ordering as an {\em utterance plan}.
 %%  %KM - I put in italics. This sentence implies it's the first time mentioned, but you mention t in the intro. Perhaps you can define it there? 
 

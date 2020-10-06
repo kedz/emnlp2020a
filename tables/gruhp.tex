@@ -1,0 +1,27 @@
+\begin{table*}
+\center
+\begin{tabular}{clccc ccc ccc}
+\toprule
+&Model & Layers & LS & WD & Optim. & LR & Emb. & Attention & Params & Train Time \\
+\midrule
+    \parbox[t]{2mm}{\multirow{6}{*}{\rotatebox[origin=c]{90}{E2E}}} 
+ & \lsshort{Rnd} & 2 & 0.1 & $10^{-5}$ & Adam & $10^{-5}$ & untied & Bahdanau & 14,820,419 & 31.16 \\
+ & \lsshort{Fp} & 2 & 0.1 & $10^{-5}$ & SGD & $0.1$ & untied & Bahdanau & 14,820,003 & 24.78\\ 
+ & \lsshort{If} & 2 & 0.1 & $0.0$ & SGD & $0.5$ & untied & General & 14,557,763 & 26.44 \\
+ & \lsshort{If+p} & 2 & 0.1 & $0.0$ & SGD & $0.5$ & untied & General & 14,557,763 & 15.23 \\
+ & \lsshort{At} & 2 & 0.1 & $10^{-5}$ & Adam & $10^{-5}$ & untied & Bahdanau & 14,820,419 & 26.07 \\
+ & \lsshort{At+p} & 2 & 0.1 & $10^{-5}$ & Adam & $10^{-5}$ & untied & Bahdanau & 14,820,419 & 36.49 \\
+\midrule
+    \parbox[t]{2mm}{\multirow{6}{*}{\rotatebox[origin=c]{90}{ViGGO}}} 
+ & \lsshort{Rnd} & 2 & 0.1 & $10^{-5}$ & SGD & $0.25$ & untied & General & 14,274,865 & 20.69 \\
+ & \lsshort{Fp} & 1 & 0.1 & $10^{-5}$ & Adam & $10^{-5}$ & untied & Bahdanau & 7,718,193 & 30.07\\ 
+ & \lsshort{If} & 1 & 0.0 & $0.0$ & SGD & $0.5$ & untied & Bahdanau & 7,712,049 & 11.62\\ 
+ & \lsshort{If+} & 1 & 0.0 & $0.0$ & SGD & $0.5$ & untied & Bahdanau & 7,712,049 & 5.08\\ 
+ & \lsshort{At} & 2 & 0.1 & $0.0$ & Adam & $10^{-5}$ & untied & Bahdanau & 14,537,521 & 21.01\\ 
+ & \lsshort{At+p} & 2 & 0.1 & $0.0$ & Adam & $10^{-5}$ & untied & Bahdanau & 14,537,521 & 14.95\\ 
+\bottomrule
+\end{tabular}
+
+\caption{Winning hyperparameter settings for biGRU models. LS and WD indicate label smoothing and weight decay respectively. Train time is in hours.}
+\label{tab:gruparams}
+\end{table*}

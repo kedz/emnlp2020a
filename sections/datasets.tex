@@ -21,7 +21,7 @@ open-class \Atr{specifier} attribute (see \autoref{app:specifier} for details).
 \subsection{MR/Utterance Alignments} \label{sec:align}
 
 The original datasets do not have alignments between individual
-attribute-values and the subspans of the utterances they occur in, which we
+attribute-value pairs and the subspans of the utterances they occur in, which we
 need for the \lsshort{At} linearization strategy.  We manually developed a
 list of heuristic pattern matching rules (e.g. \textit{not kid-friendly}
 $\rightarrow$ \AV{family\_friendly}{no}).  For ViGGO, we started from scratch,
@@ -39,14 +39,15 @@ In cases where the matching rules produced different MRs than provided in the
 original dataset, we manually checked them. In many cases on the E2E dataset
 and several times on ViGGO, we found the rule to be correct and the MR to be
 incorrect for the given utterance. In those cases, we used the corrected MRs
-for training and validation. To maintain comparability to prior work, we
+for training and validation. %To maintain comparability to prior work, 
+We
 do not modify the test sets in any way. Using the matching rules, we can
 determine alignments between the provided MR and the realized utterances.
 
-For most cases, the attribute-values uniquely correspond to an non-overlapping
+For most cases, the attribute-values uniquely correspond to a non-overlapping
 subspan of the utterance. The \Atr{rating} attribute in the ViGGO dataset,
 however, could have multiple reasonable mappings to the utterance, so we treat
-it in practice like an addendum to dialogue act, occuring directly after the
+it in practice like an addendum to the dialogue act, occurring directly after the
 dialogue act as part of a ``header'' section in any  MR linearization strategy
 (see \autoref{fig:linstrats} where \AV{rating}{N/A} occurs after the dialogue
 act regardless of choice of linearization strategy).

@@ -10,8 +10,8 @@
 \newcommand{\mr}{\ensuremath{\mu}}
 \newcommand{\MRs}{\ensuremath{\mathcal{M}}}
 \newcommand{\attr}{\ensuremath{x}}
-\newcommand{\utt}{\ensuremath{y}}
-\newcommand{\utttok}{\ensuremath{w}}
+\newcommand{\utt}{\ensuremath{\mathbf{y}}}
+\newcommand{\utttok}{\ensuremath{y}}
 
 \newcommand{\Utts}{\ensuremath{\mathcal{Y}}}
 \newcommand{\da}{\ensuremath{a}}
@@ -105,9 +105,11 @@
 \newcommand{\layerNorm}{\operatorname{LN}}
 \newcommand{\mmhAttn}{\operatorname{maskedMHAttn}}
 \newcommand{\mhAttn}{\operatorname{MHAttn}}
+\newcommand{\MultiAttn}{\operatorname{MultiAttn}}
 \newcommand{\Attn}{\operatorname{Attn}}
 \newcommand{\softmax}{\operatorname{softmax}}
 \newcommand{\feedforward}{\operatorname{FF}}
+\newcommand{\relu}{\operatorname{ReLU}}
 
 \newcommand{\Query}{\mathbf{Q}}
 \newcommand{\Key}{\mathbf{K}}
@@ -117,4 +119,24 @@
 \newcommand{\encInput}{\mathbf{H}}
 \newcommand{\decInput}{\mathbf{G}}
 \newcommand{\decInputi}{\mathbf{g}_i}
+\newcommand{\lnweight}{\mathbf{A}}
+\newcommand{\lnweightv}{\mathbf{a}}
+\newcommand{\lnbias}{\mathbf{b}}
+\newcommand{\Mask}{\mathbf{M}}
+
+
+\newcommand{\tfeA}{\boldsymbol{\check{\encInput}}^{(i)}}
+\newcommand{\tfeB}{\boldsymbol{\bar{\encInput}}^{(i)}}
+\newcommand{\tfeC}{\boldsymbol{\hat{\encInput}}^{(i)}}
+\newcommand{\tfeD}{\boldsymbol{\dot{\encInput}}^{(i)}}
+\newcommand{\tfeE}{\boldsymbol{\ddot{\encInput}}^{(i)}}
+
+\newcommand{\tfdA}{\boldsymbol{\check{\decInput}}^{(i)}}
+\newcommand{\tfdB}{\boldsymbol{\bar{\decInput}}^{(i)}}
+\newcommand{\tfdC}{\boldsymbol{\hat{\decInput}}^{(i)}}
+\newcommand{\tfdD}{\boldsymbol{\grave{\decInput}}^{(i)}}
+\newcommand{\tfdE}{\boldsymbol{\tilde{\decInput}}^{(i)}}
+\newcommand{\tfdF}{\boldsymbol{\acute{\decInput}}^{(i)}}
+\newcommand{\tfdG}{\boldsymbol{\dot{\decInput}}^{(i)}}
+\newcommand{\tfdH}{\boldsymbol{\ddot{\decInput}}^{(i)}}
 

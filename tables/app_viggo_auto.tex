@@ -1,43 +1,79 @@
 \begin{table*}
 \center
 
-\begin{tabular}{lll c c c c  c c c c  c c c c}
-     & & &  \multicolumn{5}{c}{Automatic Quality Metrics} \\
-    \cmidrule(lr){4-8} 
-     & & &  \textsc{Bleu} &  \textsc{Nist} &  \textsc{Meteor} & \textsc{Rouge-L} & \textsc{Cide}r \\
-    \midrule
-    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
-    &\textsc{Rnd} & &50.18&8.300&37.78&61.56&2.490 \\
-    &\textsc{Fp} & &50.18&8.132&37.18&61.04&2.460 \\
-    &\textsc{If} & &50.24&8.160&37.40&61.32&2.458 \\
-    &  & \textsc{+p}&49.48&8.010&37.26&61.58&2.430 \\
-    &\textsc{At +BgDP} & &48.52&7.946&37.32&58.48&2.466 \\
-    &\textsc{At +NDP} & &51.84&8.252&38.48&62.56&2.618 \\
-    &  & \textsc{+p}&52.40&8.084&38.34&62.66&2.594 \\
-    &\textsc{At (Oracle)} & &\textbf{54.08}&\textbf{8.504}&\textbf{39.38}&\textbf{65.48}&\textbf{2.698} \\
-    \midrule
-    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
-    &\textsc{Rnd} & &52.04&8.166&38.10&62.86&2.556 \\
-    &\textsc{Fp} & &52.58&8.246&38.32&63.02&2.574 \\
-    &\textsc{If} & &52.28&8.184&38.14&62.58&2.568 \\
-    &  & \textsc{+p}&52.34&8.106&38.44&63.12&2.570 \\
-    &\textsc{At +BgDP} & &48.70&8.174&37.50&59.22&2.438 \\
-    &\textsc{At +NDP} & &51.60&8.352&38.52&62.42&2.592 \\
-    &  & \textsc{+p}&51.06&8.138&38.12&62.00&2.512 \\
-    &\textsc{At (Oracle)} & &\textbf{53.18}&\textbf{8.508}&\textbf{39.12}&\textbf{64.96}&\textbf{2.662} \\
-    \midrule
-    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
-    &\textsc{Rnd} & &43.72&7.814&37.70&55.12&2.304 \\
-    &\textsc{Fp} & &47.04&8.184&38.48&58.88&2.416 \\
-    &\textsc{If} & &43.06&7.744&37.62&54.36&2.238 \\
-    &  & \textsc{+p}&\textbf{49.06}&\textbf{8.284}&38.36&59.66&\textbf{2.454} \\
-    &\textsc{At +BgDP} & &43.76&7.888&37.38&53.98&2.338 \\
-    &\textsc{At +NDP} & &45.46&8.034&37.84&57.62&2.368 \\
-    &  & \textsc{+p}&48.50&8.248&38.04&59.24&2.454 \\
-    &\textsc{At (Oracle)} & &47.10&8.194&\textbf{38.50}&\textbf{60.40}&2.444 \\
-    \midrule
-\end{tabular}
+%\begin{tabular}{lll c c c c  c c c c  c c c c}
+%     & & &  \multicolumn{5}{c}{Automatic Quality Metrics} \\
+%    \cmidrule(lr){4-8} 
+%     & & &  \textsc{Bleu} &  \textsc{Nist} &  \textsc{Meteor} & \textsc{Rouge-L} & \textsc{Cide}r \\
+%    \midrule
+%    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
+%    &\textsc{Rnd} & &50.18&8.300&37.78&61.56&2.490 \\
+%    &\textsc{Fp} & &50.18&8.132&37.18&61.04&2.460 \\
+%    &\textsc{If} & &50.24&8.160&37.40&61.32&2.458 \\
+%    &  & \textsc{+p}&49.48&8.010&37.26&61.58&2.430 \\
+%    &\textsc{At +BgDP} & &48.52&7.946&37.32&58.48&2.466 \\
+%    &\textsc{At +NDP} & &51.84&8.252&38.48&62.56&2.618 \\
+%    &  & \textsc{+p}&52.40&8.084&38.34&62.66&2.594 \\
+%    &\textsc{At (Oracle)} & &\textbf{54.08}&\textbf{8.504}&\textbf{39.38}&\textbf{65.48}&\textbf{2.698} \\
+%    \midrule
+%    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
+%    &\textsc{Rnd} & &52.04&8.166&38.10&62.86&2.556 \\
+%    &\textsc{Fp} & &52.58&8.246&38.32&63.02&2.574 \\
+%    &\textsc{If} & &52.28&8.184&38.14&62.58&2.568 \\
+%    &  & \textsc{+p}&52.34&8.106&38.44&63.12&2.570 \\
+%    &\textsc{At +BgDP} & &48.70&8.174&37.50&59.22&2.438 \\
+%    &\textsc{At +NDP} & &51.60&8.352&38.52&62.42&2.592 \\
+%    &  & \textsc{+p}&51.06&8.138&38.12&62.00&2.512 \\
+%    &\textsc{At (Oracle)} & &\textbf{53.18}&\textbf{8.508}&\textbf{39.12}&\textbf{64.96}&\textbf{2.662} \\
+%    \midrule
+%    \parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
+%    &\textsc{Rnd} & &43.72&7.814&37.70&55.12&2.304 \\
+%    &\textsc{Fp} & &47.04&8.184&38.48&58.88&2.416 \\
+%    &\textsc{If} & &43.06&7.744&37.62&54.36&2.238 \\
+%    &  & \textsc{+p}&\textbf{49.06}&\textbf{8.284}&38.36&59.66&\textbf{2.454} \\
+%    &\textsc{At +BgDP} & &43.76&7.888&37.38&53.98&2.338 \\
+%    &\textsc{At +NDP} & &45.46&8.034&37.84&57.62&2.368 \\
+%    &  & \textsc{+p}&48.50&8.248&38.04&59.24&2.454 \\
+%    &\textsc{At (Oracle)} & &47.10&8.194&\textbf{38.50}&\textbf{60.40}&2.444 \\
+%    \midrule
+%\end{tabular}
 
+\begin{tabular}{lll c c c c  c c c c  c c c c}
+ & & &  \multicolumn{5}{c}{Automatic Quality Metrics} \\
+\cmidrule(lr){4-8} 
+ & & &  \textsc{Bleu} &  \textsc{Nist} &  \textsc{Meteor} & \textsc{Rouge-L} & \textsc{Cide}r \\
+\midrule
+\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{biGRU}}}
+&\textsc{Rnd} & &50.18&8.300&37.78&61.56&2.490 \\
+&\textsc{Fp} & &50.18&8.132&37.18&61.04&2.460 \\
+&\textsc{If} & &50.24&8.160&37.40&61.32&2.458 \\
+&  & \textsc{+p}&49.48&8.010&37.26&61.58&2.430 \\
+&\textsc{At+BgUP} & &48.52&7.946&37.32&58.48&2.466 \\
+&\textsc{At+NUP} & &51.84&8.252&38.48&62.56&2.618 \\
+&  & \textsc{+p}&52.40&8.084&38.34&62.66&2.594 \\
+&\textsc{At Oracle} & &\textbf{54.08}&\textbf{8.504}&\textbf{39.38}&\textbf{65.48}&\textbf{2.698} \\
+\midrule
+\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{Transformer}}}
+&\textsc{Rnd} & &52.04&8.166&38.10&62.86&2.556 \\
+&\textsc{Fp} & &52.58&8.246&38.32&63.02&2.574 \\
+&\textsc{If} & &52.28&8.184&38.14&62.58&2.568 \\
+&  & \textsc{+p}&52.34&8.106&38.44&63.12&2.570 \\
+&\textsc{At+BgUP} & &48.70&8.174&37.50&59.22&2.438 \\
+&\textsc{At+NUP} & &51.60&8.352&38.52&62.42&2.592 \\
+&  & \textsc{+p}&51.06&8.138&38.12&62.00&2.512 \\
+&\textsc{At Oracle} & &\textbf{53.18}&\textbf{8.508}&\textbf{39.12}&\textbf{64.96}&\textbf{2.662} \\
+\midrule
+\parbox[t]{2mm}{\multirow{8}{*}{\rotatebox[origin=c]{90}{BART}}}
+&\textsc{Rnd} & &43.72&7.814&37.70&55.12&2.304 \\
+&\textsc{Fp} & &47.04&8.184&38.48&58.88&2.416 \\
+&\textsc{If} & &43.06&7.744&37.62&54.36&2.238 \\
+&  & \textsc{+p}&\textbf{49.06}&\textbf{8.284}&38.36&59.66&\textbf{2.454} \\
+&\textsc{At+BgUP} & &43.76&7.888&37.38&53.98&2.338 \\
+&\textsc{At+NUP} & &45.46&8.034&37.84&57.62&2.368 \\
+&  & \textsc{+p}&48.50&8.248&38.04&59.24&2.454 \\
+&\textsc{At Oracle} & &47.10&8.194&\textbf{38.50}&\textbf{60.40}&2.444 \\
+\midrule
+\end{tabular}
 
 
 \caption{ViGGO test set automatic quality measures from the official E2E evaluation script.}

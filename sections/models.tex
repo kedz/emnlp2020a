@@ -4,16 +4,16 @@
 
 We examine the effects of linearization strategy and data augmentation on a
 bidirectional GRU with attention (\biGRU) and \Transformer-based S2S models.
-Hyper-parameters were found using grid-search, selecting the model with best
+Hyperparameters were found using grid-search, selecting the model with best
 validation \bleu~\cite{papineni2002} score. We performed a separate
 grid-search for each architecture-linearization strategy pairing in case there
-was no one best hyper-parameter setting.  
+was no one best hyperparameter setting.  
 
 Additionally, we fine-tune BART \cite{lewis2020}, a large pretrained
 Transformer-based S2S model. We stop fine-tuning after validation set
 cross-entropy stops decreasing.
 
-Complete architecture specification, hyper-parameter search space, and
+Complete architecture specification, hyperparameter search space, and
 validation results for all three models can be found in \autoref{app:hps}.
 
 \paragraph{Decoding}
@@ -38,7 +38,7 @@ ordering determined by the matching rules (i.e. the \lsshort{At} ordering).
 The second model is a \biGRU~based S2S model, which we refer to as the neural
 utterance planner (\NUP). We train the \NUP~to map \lsshort{If} ordered
 attribute-values to the \lsshort{At} ordering. We grid-search model
-hyper-parameters, selecting the model with highest average Kendall's $\tau$
+hyperparameters, selecting the model with highest average Kendall's $\tau$
 \cite{kendall1938} on the validation set \lsshort{At} orderings. See
 \autoref{app:ndp} for hyperparameter/model specification details. Unlike the
 \BgUP~model, the \NUP~model also conditions on the dialogue act, so it can

@@ -4,51 +4,80 @@
 \paragraph{\lsshort{At} models accurately follow utterance plans.} See
 \autoref{tab:main.e2e.test} and \autoref{tab:main.viggo.test} for results on
 E2E and ViGGO test sets respectively.  
-{\color{red}The best non-\Oracle~results are bolded for each model and results
+The best non-\Oracle~results are bolded for each model and results
 that are not different with statistical significance to the best results
-are underlined.}
-We see that the \lsshort{At (NUP)}
-strategy consistently receives the lowest SER and highest OA, regardless of
-architecture, suggesting that alleviating the model's decoder of content
-planning is highly beneficial to avoiding errors. The Transformer \lsshort{At} is able to consistently achieve virtually zero SER on E2E.
+are underlined.
+We see that the \lsshort{At+NUP}
+strategy consistently receives the lowest semantic error rate and highest 
+order accuracy, regardless of
+architecture or dataset, suggesting that alleviating the model's decoder of content
+planning is highly beneficial to avoiding errors. The Transformer \lsshort{At} model is able to consistently achieve virtually zero semantic error on E2E using either
+the bigram or neural planner model.
 
-{\color{red}Generally, the \lsshort{At} models had a smaller variance in test-set
-evaluation measures over the five random initializations as compared to the
-other strategies. This is reflected in some unusual equivalency classes
-by statistical significance. For example, on E2E BART SER, 
-\lsshort{At (NUP)+p} is significantly better than \lsshort{At (BgUP)}
-(0\% vs 0.2\%), but \textbf{not} \lsshort{If +p} (0\% vs 0.3\%).}
-
+We also see that fine-tuned BART is able to learn to follow an utterance plan
+as well. When following the neural utterance planner,
+BART is highly competitive with the trained from scratch Transformer
+on E2E and surpassing it on ViGGO in terms of semantic error rate.
 
 \input{tables/main_e2e_test.tex}
 \input{tables/main_viggo_test.tex}
 
-We also see that fine-tuned BART is able to learn to follow an utterance plan
-as well, and is highly competitive with the trained from scratch Transformer
-on the E2E dataet (Transformer \textsc{At} (NUP), 0\% SER vs. BART
-\textsc{At} (NUP) 0.2\% SER), and surpasses the trained from scratch model in
-the small data ViGGO setting (Transformer \textsc{At} (NUP), 2.7\% SER vs.
-BART \textsc{At} (NUP) 0.54\% SER). 
+
+
+
+%{\color{red}
+    Generally, the \lsshort{At} models had a smaller variance in test-set
+evaluation measures over the five random initializations as compared to the
+other strategies. This is reflected in some unusual equivalency classes
+by statistical significance. For example, on the E2E dataset biGRU models,
+the \lsshort{At+NUP+p} strategy acheives 0\% semantic error and is significantly
+different than all other linearization strategies \textbf{except} 
+the \lsshort{Fp} strategy even though the absolute difference in score is 
+6.54\%. This is unusual because the \lsshort{At+NUP+p} strategy \textbf{is} 
+significantly different from \lsshort{At+NUP} but the absolute difference is
+only 0.26\%. This happens because the variance in test-set results
+is higher for \lsshort{Fp} making it harder to show signficance with only
+five samples.
+
+
+%the difference in semantic error rate between the \lsshort{At} 
+%model with and without phrase augmenation \textbf{is} significant at 0.2\% SER
+%absolute. The \lsshort{If} model with phrase augmentation
+%is \textbf{not} significantly different 
+
+%\lsshort{At (NUP)+p} is significantly better than \lsshort{At (BgUP)}
+%(0\% vs 0.2\%), but \textbf{not} \lsshort{If +p} (0\% vs 0.3\%).}
+
+
+
+
+
+%and is highly competitive with the trained from scratch Transformer
+%on the E2E dataet (Transformer \textsc{At} (NUP), 0\% SER vs. BART
+%\textsc{At} (NUP) 0.2\% SER), and surpasses the trained from scratch model in
+%the small data ViGGO setting (Transformer \textsc{At} (NUP), 2.7\% SER vs.
+%BART \textsc{At} (NUP) 0.54\% SER). 
 
 \paragraph{Transformer-based models are more faithful than biGRU on
 \textsc{Rnd, Fp}, and \textsc{If} linearizations.} On the ViGGO dataset, BART
-and Transformer \lsshort{If} achieve 1.86\% and 7.50\% SER respectively, while
-the biGRU \lsshort{If} model has 19.20\%. These trends hold for \lsshort{Fp}
+and Transformer \lsshort{If} achieve 1.86\% and 7.50\% semantic error rate 
+respectively, while
+the biGRU \lsshort{If} model has 19.20\% semantic error rate. These trends hold for \lsshort{Fp}
 and \lsshort{Rnd}, and on the E2E dataset as well. Because there is no
-sequential corresondence in the input, it is possible that the recurrence in
+sequential correspondence in the input, it is possible that the recurrence in
 the biGRU makes it difficult to ignore spurious input ordering effects.
 Additionally, we see that \lsshort{Rnd} does offer some benefits of denoising;
-\lsshort{Rnd} models have lower SER than \lsshort{If} models in 3 of 6 cases 
+\lsshort{Rnd} models have lower semantic error rate than \lsshort{If} models in 3 of 6 cases 
 and \lsshort{Fp} models in 5 out of 6 cases.
 
 \paragraph{Model based plans are easier to follow than human reference plans.
-} On E2E, there is very little difference in SER between following the
+} On E2E, there is very little difference in semantic error rate when following either the
 bigram-based utterance planner, \BgUP, or neural utterance planner,
 \NUP. This is also true of the ViGGO \BART~models as well.  In the
-small data (i.e. ViGGO) setting, trained from scratch \biGRU~and \Transformer~models achieve better SER when following the \NUP.  In most cases,
-NUP models have slightly higher \bleu~and \rougel~than
-\BgUP, suggesting the NUP model produces utterance plans closer to
-the reference orderings. NUP and \textsc{BgUP} models have slightly lower SER
+small data (i.e. ViGGO) setting, \biGRU~and \Transformer~models achieve better semantic error rate when following the neural utterance planner.  In most cases,
+neural utterance planner models have slightly higher \bleu~and \rougel~than
+the bigram utterance planner, suggesting the neural planner produces utterance plans closer to
+the reference orderings. The neural and bigram planner models have slightly lower semantic error rate
 than when following the \Oracle~utterance plans.  This suggests that the models
 are producing orders more commonly seen in the training data, similar to how
 neural language generators frequently learn the least interesting, lowest
@@ -58,41 +87,47 @@ reference, e.g. achieving an E2E \textsc{Rouge-L} $\ge 77$.
 
 \input{tables/main_perm.tex}
 
-\paragraph{Phrase-training reduces SER.} We see that phrase data improves SER
-in 8 out of 12 cases, with the largest games coming from the biGRU
-\lsshort{If} model.  Where the base SER was higher, phrase training has a more
+\paragraph{Phrase-training reduces SER.} We see that phrase data improves semantic error rate
+in 8 out of 12 cases, with the largest gains coming from the biGRU
+\lsshort{If} model.  Where the base semantic error rate was higher, phrase training has a more
 noticeable effect. After phrase training, all E2E models are operating at near
-zero SER and almost perfectly following the NUP. Model performance on ViGGO
-is more varied, with phrase training slighting hurting the
-\lsshort{biGRU At (NUP)} model, but otherwise helping performance.
+zero semantic error rate and almost perfectly following the neural utterance planner. Model performance on ViGGO
+is more varied, with phrase training slighting hurting the biGRU
+\lsshort{At+NUP} model, but otherwise helping performance.
 %while improving for BART
 %\lsshort{At (NUP)} models, but improving the Transformer.
 
 \paragraph{Random Permutation Stress Test} Results of the random permutation
 experiment are shown in \autoref{tab:perm}.  Overall, all models have an
-easier time following the NUP provided utterance plan compared to random
-permutations. Phrase training also generally improved SER.  All models perform
-quite well on the E2E permutations.  Models had an easier time following the
-NUP reordering compared to the random permutations, but with phrase-training,
-all E2E models achieve less than 0.6\% SER following random utterance plans.
-Starker differences emerge on the ViGGO dataset.  The biGRU +p +NUP model
-achieves a 8.98\% SER and only correctly follows the given order 64.5\% of
-the time, which is a large decrease in performance compared to that model on
-the ViGGO test set (1.62\% SER and 94.3\% OA).
+easier time following the neural utterance planner's reordering of
+the random
+permutations. Phrase training also generally improved semantic error rate.  All models perform
+quite well on the E2E permutations.  
+%Models had an easier time following the
+%neural utterance planner's reordering compared to the random permutations, but
+With phrase-training,
+all E2E models achieve less than 0.6\% semantic error rate following random 
+utterance plans.
+Starker differences emerge on the ViGGO dataset.  The biGRU\textsc{+NUP+p} model
+achieves a 8.98\% semantic error rate and only correctly follows the given 
+order 64.5\% of
+the time, which is a large decrease in performance compared to the ViGGO test set.% (1.62\% SER and 94.3\% OA).
 
 \input{tables/main_human.tex}
 
 \paragraph{Human Evaluation} Results of the human evaluation are shown in
 \autoref{tab:human}. We show the number of times each system was ranked 1
 (most natural), 2, or 3 (least natural) and the average rank overall.
-Overall, we see that model (i) BART \lsshort{At+p} model with the NUP  is
+Overall, we see that BART  with the neural utterance planner 
+and phrase-augmentation training is
 preferred on both datasets, suggesting that the utterance planner is
 producing natural orderings of the attribute-values, and the model can
 generate reasonable output for it. On the E2E dataset, we also see small
-differences in between models (ii) \lsshort{At+p} and (iii) \lsshort{At}
+differences in between the \lsshort{At+p} and \lsshort{At} models
 suggesting that when following an arbitrary ordering, the phrase-augmented
 model is about as natural as the non-phrase trained model. This is encouraging
-as the phrase trained model has lower SER. On the ViGGO dataset we do find
+as the phrase trained model has lower semantic error rates. 
+On the ViGGO dataset we do find
 that the phrase trained model is less natural, suggesting that in the small
 data setting, phrase-training may hurt fluency when trying to follow a
 difficult utterance plan.

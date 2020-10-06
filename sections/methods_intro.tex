@@ -11,9 +11,9 @@ attributes but we treat them as individual attribute-value pairs (i.e. in
 
 Let each attribute-value pair \attr~and dialogue act \da~be tokens from a
 vocabulary \Attrs, and define the size of an MR, denoted  $\size{\mr}$,  to be
-the number of attribute-values $\attr \in \mr$.  A linearization
+the number of attribute-value pairs $\attr \in \mr$.  A linearization
 strategy $\lin : \MRs \rightarrow \Attrs^*$ is a mapping of the dialogue act
-and attribute-values in \mr~to an ordered sequence, i.e.  $\lin(\mr) = [\da,
+and attribute-value pairs in \mr~to an ordered sequence, i.e.  $\lin(\mr) = [\da,
 \attr_1, \attr_2, \ldots, \attr_\size{\mr}]$.  Regardless of the choice of
 \lin, the first token in $\lin(\mr)$ is always the dialogue act \da.
 
@@ -21,7 +21,7 @@ We experiment with both gated recurrent unit (GRU) \cite{cho2014} and
 Transformer \cite{vaswani2017} based S2S model variants to implement a
 conditional probability model $\model(\cdot| \lin(\mr); \theta) : \Utts
 \rightarrow (0, 1)$ over utterances. The model parameters,
-$\theta$ are learned by approximately maximizing the log-likelihood
+$\theta$, are learned by approximately maximizing the log-likelihood
 $\mathcal{L}(\theta)= \sum_{(\mr,\utt)\in \mathcal{D}}  \log
 \model(\utt|\lin(\mr); \theta)$ on the training set $\mathcal{D}$.
 Additionally, we experiment with a pretrained S2S Transformer, BART

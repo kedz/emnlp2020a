@@ -4,17 +4,20 @@ While we are able to acheive very low test-set SER for both corpora, we
 should caution that this required extensive manual development of matching 
 rules to produce MR/utterance alignments, which in turn resulted in 
 significant cleaning of the training datasets. We chose to do this over 
-pursuing a model based strategy of predicting the semantic correctness
+pursuing a model based strategy of aligning utterance subspans to 
+attribute-values %predicting the semantic correctness
 because we wanted to better understand how systematically S2S models can
 represent arbitray order permutations independent of alignment model error. 
 %so that
 %an upper bound on this representational capacity might be estimated. 
 
-There are, of course, many other works that either separately or jointly
-model the semantic correctness \cite{nie2019,kedzie2019}, and additionally the semantic segmentation \cite{wiseman2018,shen2020,li2020} which
- could be used in practice to avoid such manual efforts.
+%There are, of course, many other works that either separately or jointly
+%model the semantic correctness \cite{nie2019,kedzie2019}, and additionally the semantic segmentation \cite{wiseman2018,shen2020,li2020} which
+% could be used in practice to avoid such manual efforts.
 
-Also we should note that while possibly less glamorous than proposing novel
-model architecture, data cleaning can yield more substantial decreases in
+Also we should note that 
+%while possibly less glamorous than proposing novel
+%model architecture, 
+data cleaning can yield more substantial decreases in
 semantic errors \cite{dusek2019,hongminwang2019} and is an important 
-consideration in any practical implementation of neural NLG.
+consideration in any practical neural NLG.

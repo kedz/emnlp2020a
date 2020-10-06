@@ -10,7 +10,7 @@ follow the order of the provided plan.
 %as indicated by
 %the utterance plan. 
 
-In non-neural NLG, fine-grained control of the text generation process has
+In non-neural NLG, fine-grained control for planning sentence structure has
 received extensive study under the names \textit{sentence} or
 \textit{micro-planning} \cite{reiter2000,walker2001,stone2003}.  Contemporary
 practice, however, eschews modeling at this granularity, instead preferring to
@@ -24,7 +24,7 @@ We argue that robust and fine grained control in an S2S model is desirable
 because it enables neural implementations of various psycho-linguistic
 theories of discourse (e.g., Centering Theory \cite{grosz1995}, or
 Accessibility Theory \cite{ariel2001}).  This could, in turn, encourage the
-validation and/or refinement of more psychologically plausible models of
+validation and/or refinement of additional psychologically plausible models of
 language production.
  
 \input{figures/examples.tex}
@@ -65,7 +65,7 @@ arbitrary utterance plan.
 produces highly controllable %and faithful 
 language generation models},
 %in both recurrent and non-recurrent S2S models, 
-especially when following a model provided utterance plan. (2) We demonstrate that \textbf{phrase-based
+especially when following a model created utterance plan. (2) We demonstrate that \textbf{phrase-based
 data augmentation improves the robustness of the control} even on arbitrary
 and difficult to follow utterance plans. (3) We conclude with a human
 evaluation that shows that \textbf{phrase-based data augmentation training

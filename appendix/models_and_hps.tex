@@ -6,9 +6,10 @@
 Utterance text was sentence and word tokenized, and all tokens were
 lower-cased. A special \textit{sentence-boundary} token was inserted between
 sentences. All words occurring fewer than 3 times on the training set were
-replaced with a special \textit{unknown} token.  The resulting utterance
-vocabulary sizes are \placeholder{X} and \placeholder{X} for E2E and ViGGO
-datasets respectively.  We used a batch size of 128 for all biGRU and
+replaced with a special \textit{unknown} token.  %The resulting utterance
+%vocabulary sizes are \placeholder{X} and \placeholder{X} for E2E and ViGGO
+%datasets respectively.  
+We used a batch size of 128 for all biGRU and
 Transformer models.  All models were trained on a single Nvidia Tesla v100 for
 at most 700 epochs.
 
@@ -58,6 +59,7 @@ they are re-lexicalized with the appropriate value strings from the input MR).
 
 
 \subsection{biGRU Model Definition}
+\label{sec:bahdanau}
 
 Let $\Attrs$ be the encoder input vocabulary, and  $\encEmbs \in
 \reals^{\size{\Attrs} \times \embDim}$ an associated word embedding matrix
@@ -91,15 +93,15 @@ encoder GRU parameters.
 When using a two layer GRU, we similarly compute
 \begin{align*}
     \fhstate^{(2)}_0 & =\rhstate^{(2)}_{\inSize+1}  = \zeroEmb \\
-    \fhstate^{(2)}_i &= \fgru\left(\encWordEmb_i, \fhstate^{(2)}_{i-1};
+    \fhstate^{(2)}_i &= \fgru\left(\hstate^{(1)}_i, \fhstate^{(2)}_{i-1};
             \fencgruparams{2}\right) &
     \textrm{for $i \in 1,\ldots,\inSize$}\\
-    \rhstate^{(2)}_i &= \fgru\left(\encWordEmb_i, \rhstate^{(2)}_{i+1};
+    \rhstate^{(2)}_i &= \fgru\left(\hstate^{(1)}_i, \rhstate^{(2)}_{i+1};
             \rencgruparams{2}\right) &
     \textrm{for $i \in \inSize,\ldots,1$}\\
     \hstate_i^{(2)} & = \left[\fhstate_i, \rhstate_i\right]
 \end{align*}
-where $\fhstate^{(2)}_i,\rhstate^{(2)}_i \in \reals^{2\hidDim}$, $\hstate^{(2)}_i \in  \reals^{2\hidDim}$,
+where $\fhstate^{(2)}_i,\rhstate^{(2)}_i \in \reals^{\hidDim}$, $\hstate^{(2)}_i \in  \reals^{2\hidDim}$,
 and $\fencgruparams{2}$ and $\rencgruparams{2}$ are the forward and backward
 encoder GRU parameters for the second layer.
 
@@ -116,15 +118,18 @@ $\decEmbs_\utttok \in \reals^{\embDim}$ denotes a  $\embDim$-dimensional embeddi
 each $\utttok \in \uttVocab$.
 
 %\placeholder{TODO: Make this true for all layers}
-Given the decoder input sequence $\utt = \utttok_1, \utttok_2, \ldots, \utttok_\outSize$, where $\outSize = \size{\utt}$,
+Given the decoder input sequence $\utt = \utttok_1, \utttok_2, \ldots, 
+\utttok_\size{\utt}$, 
 let $\decWordEmb_i = \decEmbs_{\utttok_i}$ for $i \in \{1, \ldots \outSize\}$.
+where $\outSize = \size{\utt} - 1$
 
+\input{tables/gruhp.tex}
 
 We compute the hidden states of the $i$-th layer of the decoder as,
 \begin{align*}
 \gstate^{(i)}_0 & = \tanh\left(\weight{i} \hstate^{(i)}_\inSize + \bias{i}\right)\\
 \end{align*}
-\noindent for $j \in 1,\ldots,\outSize-1$
+\noindent for $j \in 1,\ldots,\outSize$
 \begin{align*}
     \gstate^{(i)}_j &= \fgru\left(\gstate^{(i-1)}_j, \gstate^{(i)}_{j-1};
             \decgruparams{i}\right) \\
@@ -136,16 +141,21 @@ i.e. $\gstate_i = \gstate_i^{(1)}$
 in the one-layer biGRU case, and $\gstate_i=\gstate_i^{(2)}$ in the two layer 
 case.
 
+
+
 Then the decoder states attend to the encoder states,
 \begin{align*}
-    \astate_i & = \sum^{\inSize}_{j=1}\alpha_{i,j}\hstate_j & \textrm{for $i \in 1,\ldots, \outSize- 1$}
+    \astate_i & = \sum^{\inSize}_{j=1}\alpha_{i,j}\hstate_j & \textrm{for $i \in 1,\ldots, \outSize$}
 \end{align*}
-where $\alpha_{i,j} \in (0, 1), \sum^{\inSize}_{j=1}\alpha_{i,j} = 1$ is the attention weight of decoder state $i$ on encoder state $j$. We compute 
-attention in one of two ways (the attention method is a hyper-paremeter
+where $\alpha_{i,j} \in (0, 1)$ is the 
+attention weight of decoder state $i$ on encoder state $j$ and 
+$\sum^{\inSize}_{j=1}\alpha_{i,j} = 1$.
+We compute 
+attention in one of two ways (the attention method is a hyperparemeter
 option):
 \begin{enumerate}
 \item Feed-forward ``Bahdanau'' style attention \cite{bahdanau2015},
-    also known as ``concat'' \cite{luong2015}:
+    also known as ``concat'' \cite{luong2015}: 
 \[ \alpha_{i,j} = \attnvec \tanh\left(\attnweight\left[\begin{array}{c} 
     \gstate_i \\ \hstate_j\end{array}\right] \right)  \] with 
 $\attnweight \in \reals^{\hidDim \times 3\hidDim}$ and 
@@ -154,11 +164,11 @@ $\attnvec \in \reals^{\hidDim}$.
     \[ \alpha_{i,j} = \gstate_i \attnweight  \hstate_j  \] with $\attnweight \in \reals^{\hidDim \times 2\hidDim}$.
 \end{enumerate}
 
-Finally, for $i \in 1, \ldots, \outSize-1$ we compute
+Finally, for $i \in 1, \ldots, \outSize$ we compute
 \begin{align*}
 \zstate_i =  \tanh\left(\weight{z}\left[\begin{array}{l} 
     \gstate_i\\ \astate_i \end{array}\right] + \bias{z}\right) \\
-\end{align*} and 
+\end{align*} and \\
 
 \noindent $p\left(\utttok_{i+1}|\utttok_{\le i}, \lin(\mr)\right)  =$
 \begin{align*}
@@ -168,15 +178,16 @@ where $\weight{z} \in \mathbb{R}^{\hidDim \times 3\hidDim}$, $\bias{z} \in\reals
 $\bias{o} \in \reals^{\size{\uttVocab}}$,
 and $\weight{o} \in \reals^{\size{\uttVocab} \times \hidDim}$ is the output
     embedding matrix. 
-    As a hyper-paramter setting, we consider tieing the decoder 
+    As a hyperparamter setting, we consider tieing the decoder 
     input and output
     embedding matrices, i.e. $\decEmbs = \weight{o}$.
     Dropout of 0.1 is applied to all embedding, GRU outputs, and linear
     layer outputs. We set $\embDim = \hidDim = 512$.
 
-\subsection{biGRU Hyper-Parameter Search}
 
-We grid-search over the following hyper-parameter values:
+\subsection{biGRU Hyperparameter Search}
+
+We grid-search over the following hyperparameter values:
 
 \begin{itemize}
     \item \textbf{Layers:}  $1$, $2$ 
@@ -193,166 +204,336 @@ epochs, evaluating \textsc{Bleu} every 25 epochs to select the best model.
 We decay the learning if validation log-likelihood stops increasing 
 for five epochs. We decay the learning rate by $lr^{i+1}= .99 \times lr^{i}$.
 
-We now list the winning hyperparameter settings:
+Winning hyperparameter settings are presented \autoref{tab:gruparams}.
 
-\begin{itemize}
-    \item E2E
-\begin{itemize}
-    \item \lsshort{Rnd} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
-        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
-        \begin{itemize}
-            \item Params: 14,820,419
-            \item Avg. Train Time: 31.16 hours
-        \end{itemize}
-    \item \lsshort{Fp} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
-        weight decay, SGD with lr $=0.1$, untied embeddings, Bahdanau attention
-        \begin{itemize}
-            \item Params: 14,824,003
-            \item Avg. Train Time: 24.78 hours
-        \end{itemize}
-    \item \lsshort{If} --- 2 layers, $0.1$ label smoothing, $0.0$
-        weight decay, SGD with lr $=0.5$, untied embeddings, General attention
-        \begin{itemize}
-            \item Params: 14,557,763
-            \item Avg. Train Time: 26.44 hours
-            \item Avg. Train Time (\textsc{+p}): 15.23 hours
-        \end{itemize}
-    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
-        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
-        \begin{itemize}
-            \item Params: 14,820,419 
-            \item Avg. Train Time: 26.07 hours 
-            \item Avg. Train Time (\textsc{+p}): 36.49 hours 
-        \end{itemize}
-\end{itemize}
-\item ViGGO
-\begin{itemize}
-    \item \lsshort{Rnd} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
-        weight decay, SGD with lr $=0.25$, untied embeddings, General attention
-        \begin{itemize}
-            \item Params: 14,274,865
-            \item Avg. Train Time: 20.69 hours
-        \end{itemize}
-    \item \lsshort{Fp} --- 1 layers, $0.1$ label smoothing, $10^{-5}$
-        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
-        \begin{itemize}
-            \item Params: 7,718,193
-            \item Avg. Train Time: 30.07 hours
-        \end{itemize}
-    \item \lsshort{If} --- 1 layers, $0.0$ label smoothing, $0.0$
-        weight decay, SGD with lr $=0.5$, untied embeddings, Bahdanau attention
-        \begin{itemize}
-            \item Params: 7,712,049
-            \item Avg. Train Time: 11.62 hours
-            \item Avg. Train Time (\textsc{+p}): 5.08 hours
-        \end{itemize}
-    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, $0.0$
-        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
-        \begin{itemize}
-            \item Params: 14,537,521
-            \item Avg. Train Time: 21.01 hours
-            \item Avg. Train Time (\textsc{+p}): 14.95 hours
-        \end{itemize}
-\end{itemize}
-\end{itemize}
+
+%\begin{itemize}
+%    \item E2E
+%\begin{itemize}
+%    \item \lsshort{Rnd} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
+%        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
+%        \begin{itemize}
+%            \item Params: 14,820,419
+%            \item Avg. Train Time: 31.16 hours
+%        \end{itemize}
+%    \item \lsshort{Fp} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
+%        weight decay, SGD with lr $=0.1$, untied embeddings, Bahdanau attention
+%        \begin{itemize}
+%            \item Params: 14,824,003
+%            \item Avg. Train Time: 24.78 hours
+%        \end{itemize}
+%    \item \lsshort{If} --- 2 layers, $0.1$ label smoothing, $0.0$
+%        weight decay, SGD with lr $=0.5$, untied embeddings, General attention
+%        \begin{itemize}
+%            \item Params: 14,557,763
+%            \item Avg. Train Time: 26.44 hours
+%            \item Avg. Train Time (\textsc{+p}): 15.23 hours
+%        \end{itemize}
+%    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
+%        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
+%        \begin{itemize}
+%            \item Params: 14,820,419 
+%            \item Avg. Train Time: 26.07 hours 
+%            \item Avg. Train Time (\textsc{+p}): 36.49 hours 
+%        \end{itemize}
+%\end{itemize}
+%\item ViGGO
+%\begin{itemize}
+%    \item \lsshort{Rnd} --- 2 layers, $0.1$ label smoothing, $10^{-5}$
+%        weight decay, SGD with lr $=0.25$, untied embeddings, General attention
+%        \begin{itemize}
+%            \item Params: 14,274,865
+%            \item Avg. Train Time: 20.69 hours
+%        \end{itemize}
+%    \item \lsshort{Fp} --- 1 layers, $0.1$ label smoothing, $10^{-5}$
+%        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
+%        \begin{itemize}
+%            \item Params: 7,718,193
+%            \item Avg. Train Time: 30.07 hours
+%        \end{itemize}
+%    \item \lsshort{If} --- 1 layers, $0.0$ label smoothing, $0.0$
+%        weight decay, SGD with lr $=0.5$, untied embeddings, Bahdanau attention
+%        \begin{itemize}
+%            \item Params: 7,712,049
+%            \item Avg. Train Time: 11.62 hours
+%            \item Avg. Train Time (\textsc{+p}): 5.08 hours
+%        \end{itemize}
+%    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, $0.0$
+%        weight decay, Adam with lr $=10^{-5}$, untied embeddings, Bahdanau attention
+%        \begin{itemize}
+%            \item Params: 14,537,521
+%            \item Avg. Train Time: 21.01 hours
+%            \item Avg. Train Time (\textsc{+p}): 14.95 hours
+%        \end{itemize}
+%\end{itemize}
+%\end{itemize}
 
 
 
 
 \subsection{Transformer Model Definition}
 
-We used the Transformer S2S as implemented in 
-\href{https://pytorch.org/}{PyTorch}.
-The input embedding dimension is 512 and inner hidden layer size is 2048.
-We used 8 heads in all multi-head attention layers. 
-We used Sinusoidal position embeddings following those described in 
-\citet{rush2018}. Additionally, we used Adam with the learning
-rate schedule provided in that work (factor=1, warmup=8000).
-Dropout was set to 0.1.
+Each Transformer layer is divided into blocks which each have three
+parts, (i) layer norm, (ii) feed-forward/attention, and  (iii) skip-connection.
+We first define the components used in the transformer blocks before
+describing the overall S2S transformer. 
+Starting with layer norm \cite{ba2016}, let $\encInput \in \reals^{m\times n}$, then we have
+$\layerNorm : \reals^{m \times n} \rightarrow \reals^{m \times n}$,
+\[\layerNorm(\encInput; \lnweightv, \lnbias) = \lnweight \odot (\encInput - \boldsymbol{\mu}) \odot \Lambda + \mathbf{b} \]
+
+where $\lnweightv, \lnbias \in \reals^n$ are learned parameters, $\odot$ is the elementwise product, $\lnweight = \left[\lnweightv,\ldots,\lnweightv\right] \in \reals^{m\times n}$ is a tiling of the parameter vector, $\lnweightv$, $m$ times, and  $\boldsymbol{\mu}, \boldsymbol{\Lambda} \in \reals^{m\times n}$ are
+defined elementwise as
+\[\boldsymbol{\mu}_{i,j} = \frac{1}{n} \sum_{k=1}^n \encInput_{i,k}\]
+and 
+\[\boldsymbol{\Lambda}_{i,j} = \left(
+    \sqrt{ \frac{1}{n-1} \sum_{k=1}^n \left( 
+\encInput_{i,k} - \boldsymbol{\mu}_{i,j} \right)^2  + \epsilon}\right)^{-1}\]
+respectively. The $\epsilon$ term is a small constant for numerical stability,
+set to $10^{-5}$.
+
+The inplace feed-forward layer, $\feedforward$, is a simple single-layer perceptron
+with $\relu$ activation 
+($\relu(\encInput) = \max\left(\zeroEmb, \encInput\right)$) \cite{nair2010}, applied to each row of an $m \times n$ input matrix, i.e. a sequence of $m$ objects
+with $n$ features,\\
 
 
-Let $\lin\left(\mr\right) = \left[\da, \attr_1, \ldots, \attr_\mrSize \right]$.
-The linearized MR is first embedded both with word and position
-beddings which are summed to compute the first encoder layer input,
-\[ \encInput^{(0)} = \left[\begin{array}{c}
-        \mrEmb_\da + \posEmb_\da, \\
-        \mrEmb_{\attr_1} + \posEmb_{\attr_1},\\
-        \vdots\\
-    \mrEmb_{\attr_\mrSize} + \posEmb_{\attr_\mrSize}\end{array} \right] \]
-
-We then apply $l$ Transformer encoder layers, 
-\[ \encInput^{(i)} = \operatorname{TF}_e\left(\encInput^{(i-1)}\right)\quad  \forall i: i \in \{1,\ldots,l\}  \]
-where,
-\begin{align*}
-    \boldsymbol{\check{\encInput}}^{(i-1)} &= \operatorname{LayerNorm}\left(\encInput^{(i-1)}\right)\\
-    \boldsymbol{\bar{\encInput}}^{(i-1)} &= \operatorname{MultiHeadAttn}\left(\encInput^{(i-1)},\encInput^{(i-1)}\right)\\
-    \boldsymbol{\hat{\encInput}}^{(i-1)} &= \encInput^{(i-1)} + \boldsymbol{\bar{\encInput}}^{(i-1)}\\
-    \boldsymbol{\tilde{\encInput}}^{(i-1)} &= \operatorname{LayerNorm}\left(
-        \boldsymbol{\hat{\encInput}}^{(i-1)} \right)\\
-    \boldsymbol{\acute{\encInput}}^{(i-1)} &= \operatorname{FeedForward}\left(
-        \boldsymbol{\tilde{\encInput}}^{(i-1)} \right)\\
-\encInput^{(i)} & =  \boldsymbol{\hat{\encInput}}^{(i-1)} +
-  \boldsymbol{\acute{\encInput}}^{(i-1)} 
-\end{align*}
-
-We indicate the final Transformer encoder output layer with $\encInput = \encInput^{(l)}$.
+\noindent $\feedforward\left(\encInput;\weight{i},\weight{j},\bias{i},\bias{j}\right) =$
+\[  \relu\left(\encInput\weight{i} + \bias{i}\right)\weight{j} + \bias{j}     \]
+where $\weight{i} \in \reals^{\embDim \times \hidDim}$, $\bias{i} \in \reals^{\hidDim}$,
+$\weight{j} \in \reals^{\hidDim \times \embDim}$, $\bias{j} \in \reals^{\embDim}$ are learned parameters and 
+matrix-vector additions (i.e. $\mathbf{X} + \mathbf{b}$) are broadcast across
+the matrix rows.
 
 
-\[ \decInput^{(0)} = \left[\begin{array}{c}
-        \uttEmb_{\attr_1} + \posEmb_{1},\\
-        \vdots\\
-    \mrEmb_{\attr_\mrSize} + \posEmb_{\mrSize}\end{array} \right] \]
+The final component to be defined is the multi-head attention, $\MultiAttn$ which is defined
+as\\
 
-
-\begin{align*}
-    \boldsymbol{\check{\decInput}}^{(i-1)} &= \layerNorm\left(
-        \decInput^{(i-1)}\right)\\
-    \boldsymbol{\bar{\decInput}}^{(i-1)} &= \mmhAttn\left(
-        \decInput^{(i-1)},\decInput^{(i-1)}\right)\\
-    \boldsymbol{\hat{\decInput}}^{(i-1)} &= 
-        \decInput^{(i-1)} + \boldsymbol{\bar{\decInput}}^{(i-1)}\\
-%
-    \boldsymbol{\check{\decInput}}^{(i-1)} &= \layerNorm\left(
-        \decInput^{(i-1)}\right)\\
-    \boldsymbol{\bar{\decInput}}^{(i-1)} &= \mhAttn\left(
-        \decInput^{(i-1)},\encInput^{(i-1)}\right)\\
-    \boldsymbol{\hat{\decInput}}^{(i-1)} &= 
-        \decInput^{(i-1)} + \boldsymbol{\bar{\decInput}}^{(i-1)}\\
-%
-    \boldsymbol{\tilde{\decInput}}^{(i-1)} &= \operatorname{LayerNorm}\left(
-        \boldsymbol{\hat{\decInput}}^{(i-1)} \right)\\
-    \boldsymbol{\acute{\decInput}}^{(i-1)} &= \operatorname{FeedForward}\left(
-        \boldsymbol{\tilde{\decInput}}^{(i-1)} \right)\\
-\decInput^{(i)} & =  \boldsymbol{\hat{\decInput}}^{(i-1)} +
-  \boldsymbol{\acute{\decInput}}^{(i-1)} 
-\end{align*}
-
-
-\[\Attn\left(\mathbf{Q}, \mathbf{K}, \mathbf{V}\right) = \softmax\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}} \right)\mathbf{V} \]
-
-
-\noindent  $\mhAttn(\Query, \Key) =$
+\noindent  $\MultiAttn(\Query, \Key; \weight{a_1}, \weight{a_2}) =$
 \[ \left[ \begin{array}{c} 
-    \Attn\left(\Query\mathbf{W}^{(Q)}_1, \Key\mathbf{W}^{(K)}_1, \Key \mathbf{W}^{(V)}_1 \right),\\
+            \Attn\left(\Query\weight{a_1}_{1,1}, \Key\weight{a_1}_{2,1}, \Key \weight{a_1}_{3,1} \right),\\
     \vdots \\
-    \Attn\left(\Query\mathbf{W}^{(Q)}_H, \Key\mathbf{W}^{(K)}_H, \Key \mathbf{W}^{(V)}_H \right),
-    \end{array} \right] \mathbf{W}^{(O)}
+            \Attn\left(\Query\weight{a_1}_{1,H}, \Key\weight{a_1}_{2,H}, \Key \weight{a_1}_{3,H} \right)
+\end{array} \right] \weight{a_2}
 \]
 
+where $\left[\cdot \right]$ indicates column-wise concatenation,  $\weight{a_1}_{1,*} \in \reals^{\embDim\times \embDim / H}$
+and $\weight{a_2} \in \reals^{\embDim\times \embDim}$ are learned parameters,
+$H$ is the number of attention heads, and  
+$\Attn$ is defined,
 
-\[\feedforward\left(\encInput \right) = \max\left(0, \encInput\mathbf{W} + \mathbf{b} \right)\mathbf{W} + \mathbf{b}\]
+\[\Attn\left(\mathbf{Q}, \mathbf{K}, \mathbf{V}\right) = \softmax\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{\embDim}} \right)\mathbf{V}. \]
 
-\[ \model\left(\utt_i|\utt_{<i},\lin(\mr)\right) = \softmax\left( \mathbf{W}\decInputi + \mathbf{b} \right) \]
+Additionally, there is a masked variant of attention, $\MultiAttn_{M}$
+where the attention is computed 
+
+\[\Attn\left(\mathbf{Q}, \mathbf{K}, \mathbf{V}\right) = \softmax\left(\frac{\mathbf{Q} \mathbf{K}^T \odot \Mask }{\sqrt{\embDim}} \right)\mathbf{V} \]
+where $\Mask \in \reals^{\outSize \times \inSize}$ 
+is a lower triangular matrix, i.e. values on or below the diagonal are 1
+and all other values are $-\infty$. 
+
+Given these definitions, we now define the S2S transformer.
+Let $\Attrs$ be the encoder input vocabulary, and  $\encEmbs \in
+\reals^{\size{\Attrs} \times \embDim}$ an associated word embedding matrix
+where $\encEmbs_\attr \in \reals^{\embDim}$ denotes the $\embDim$-dimensional
+embedding for each $\attr \in \Attrs$. 
+Given a linearized MR $\lin(\mr) = \inseq= \left[ \da, \attr_1, \attr_2, \ldots,
+\attr_{\size{\mr}}\right] \in \Attrs^{\inSize}$ where the length
+of the sequence is $\inSize = \size{\mr} + 1$,
+let $\encWordEmb_i = \encEmbs_{\inseq_i}$ for $i \in \{1, \ldots \inSize\}$.
+
+Additionally let $\posEmb \in \reals^{\inSize_{max} \times \embDim}$ be a sinusoidal position embedding matrix
+defined elementwise with 
+\begin{align*}
+    \posEmb_{i,2j} & = \sin\left(\frac{i}{10,000^{ \frac{2j}{\embDim} }}\right) \\
+    \posEmb_{i,2j+1} & = \cos\left(\frac{i}{10,000^{ \frac{2j}{\embDim} }}\right). 
+\end{align*}
+The encoder input sequence $\encInput^{(0)} \in \reals^{\inSize \times \embDim}$ is then defined by
+\[\encInput^{(0)} = \left[\begin{array}{c} 
+            \encWordEmb_1 + \posEmb_1,\\
+            \encWordEmb_2 + \posEmb_2,\\
+            \vdots \\
+        \encWordEmb_\inSize + \posEmb_\inSize
+    \end{array}
+                        \right] \]
+
+ A sequence of $l$ transformer encoder layers are then applied to the encoder
+ input, i.e. $\encInput^{(i+1)} = \operatorname{TF}^{(i)}_{enc}\left(\encInput^{(i)}\right)$.
+Each encoder transformer layer computes the following, \\
+
+\noindent \textit{(Self-Attention Block)}\\
+\[\tfeA = \layerNorm\left(\encInput^{(i)}; \lnweightv^{(i,1)}, \lnbias^{(i,1)}\right)\]
+\[\tfeB = \MultiAttn\left(\tfeA, \tfeA; \weight{i,a_1},  \weight{i,a_2}\right)\]
+\[\tfeC = \encInput^{(i)} + \tfeB\]
+
+\noindent \textit{(Feed-Forward Block)}\\
+\[\tfeD = \layerNorm\left(\tfeC; \lnweightv^{(i,2)}, \lnbias^{(i,2)}\right)\]
+\[\tfeE = \feedforward\left(\tfeD;\weight{i,1},\weight{i,2},\bias{i,1},\bias{i,2}\right)\]
+\[ \encInput^{(i+1)} = \tfeC + \tfeE \]
+
+
+We denote the final encoder output for $l$ layers as $\encInput = \encInput^{(l)}$.  
+
+Let $\uttVocab$ be the vocabulary of utterance tokens, and 
+$\decEmbs \in \reals^{\size{\uttVocab} \times \embDim}$
+an associated embedding matrix, where
+$\decEmbs_\utttok \in \reals^{\embDim}$ denotes a  $\embDim$-dimensional embedding for
+each $\utttok \in \uttVocab$.
+
+%\placeholder{TODO: Make this true for all layers}
+Given the decoder input sequence $\utt = \utttok_1, \utttok_2, \ldots, 
+\utttok_\size{\utt}$, 
+let $\decWordEmb_i = \decEmbs_{\utttok_i}$ for $i \in \{1, \ldots \outSize\}$.
+where $\outSize = \size{\utt} - 1$
+
+\[\decInput^{(0)} = \left[\begin{array}{c} 
+            \decWordEmb_1 + \posEmb_1,\\
+            \decWordEmb_2 + \posEmb_2,\\
+            \vdots \\
+        \decWordEmb_\outSize + \posEmb_\outSize
+    \end{array}
+                        \right]. \]
+
+
+A sequence of $l$ transformer decoder layers are then applied to the decoder
+ input, i.e. $\decInput^{(i+1)} = \operatorname{TF}^{(i)}_{dec}\left(\decInput^{(i)}\right)$.
+Each decoder transformer layer computes the following, \\
+
+~\\~\\ ~\\
+
+\noindent \textit{(Masked Self-Attention Block)}\\
+\[\tfdA = \layerNorm\left(\decInput^{(i)}; \lnweightv^{(i,1)}, \lnbias^{(i,1)}\right)\]
+\[\tfdB = \MultiAttn_M\left(\tfdA, \tfdA; \weight{i,a_1}, \weight{i,a_2} \right)\]
+\[\tfdC = \decInput^{(i)} + \tfdB\]
+
+\noindent \textit{(Encoder-Attention Block)}\\
+\[\tfdD = \layerNorm\left(\tfdC; \lnweightv^{(i,2)}, \lnbias^{(i,2)}\right)\]
+\[\tfdE = \MultiAttn\left(\tfdD, \encInput; \weight{i,a_3}, \weight{i,a_4}\right)\]
+\[\tfdF = \tfdC + \tfdE\]
+
+\noindent \textit{(Feed-Forward Block)}\\
+\[\tfdG = \layerNorm\left(\tfdF; \lnweightv^{(i,3)}, \lnbias^{(i,3)}\right)\]
+\[\tfdH = \feedforward\left(\tfdG;\weight{i,1},\weight{i,2},\bias{i,1},\bias{i,2}\right)\]
+\[ \decInput^{(i+1)} = \tfdF + \tfdH \]
+
+Let the $\decInput = \decInput^{(l)}$ denote the final decoder output,
+and let $\decInputi$ be the $i$-th row of $\decInput$ corresponding
+to the decoder representation of the $i$-th decoder state. The probability of 
+the next word is\\
+
+\noindent $\model\left(\utttok_{i+1}|\utttok_{\le i},\lin(\mr)\right)$
+\[  = \softmax\left( \weight{o}\decInputi + \bias{o} \right)_{\utttok_{i+1}} \]
+where $\weight{o} \in \reals^{\size{\uttVocab} \times \embDim}$ 
+and $\bias{o} \in \reals^{\embDim}$ are learned parameters. 
+
+
+%We used the Transformer S2S as implemented in 
+%\href{https://pytorch.org/}{PyTorch}.
+The input embedding dimension is $\embDim= 512$ and inner hidden layer size 
+is $\hidDim=2048$. The encoder and decoder have separate parameters.
+We used $H=8$ heads in all multi-head attention layers. 
+ We used Adam with the learning
+rate schedule provided in  \citet{rush2018} (factor=1, warmup=8000).
+Dropout was set to 0.1 was applied to input embeddings and each skip 
+connection (i.e. the third line in each block definition). As a 
+hyperparameter, we optionally tie the decoder input and output embeddings,
+i.e. $\decEmbs = \weight{o}$.
 
 
 
-\[\layerNorm(\encInput) = \mathbf{A} \odot (\encInput - \mu_\encInput) \odot \left(\sigma_\encInput + \epsilon\right)^{-1} + \mathbf{b} \]
 
-$(\mu_\encInput)_i = \frac{1}{F} \sum_{j=1}^F \encInput_{i,j} $
-
-
-$(\sigma_\encInput)_{i,j} = \sqrt{\frac{1}{F-1} \sum_{j^\prime=1}^F \left( \encInput_{i,j^\prime} - (\mu_\encInput)_{i,j}\right)^2} $
-
+%?$(\mu_\encInput)_i = \frac{1}{F} \sum_{j=1}^F \encInput_{i,j} $
+%?
+%?
+%?$(\sigma_\encInput)_{i,j} = \sqrt{\frac{1}{F-1} \sum_{j^\prime=1}^F \left( \encInput_{i,j^\prime} - (\mu_\encInput)_{i,j}\right)^2} $
+%?
+%?
+%?
+%?
+%?
+%?
+%?
+%?Let $\lin\left(\mr\right) = \left[\da, \attr_1, \ldots, \attr_\mrSize \right]$.
+%?The linearized MR is first embedded both with word and position
+%?beddings which are summed to compute the first encoder layer input,
+%?\[ \encInput^{(0)} = \left[\begin{array}{c}
+%?        \mrEmb_\da + \posEmb_\da, \\
+%?        \mrEmb_{\attr_1} + \posEmb_{\attr_1},\\
+%?        \vdots\\
+%?    \mrEmb_{\attr_\mrSize} + \posEmb_{\attr_\mrSize}\end{array} \right] \]
+%?
+%?We then apply $l$ Transformer encoder layers, 
+%?\[ \encInput^{(i)} = \operatorname{TF}_e\left(\encInput^{(i-1)}\right)\quad  \forall i: i \in \{1,\ldots,l\}  \]
+%?where,
+%?\begin{align*}
+%?    \boldsymbol{\check{\encInput}}^{(i-1)} &= \operatorname{LayerNorm}\left(\encInput^{(i-1)}\right)\\
+%?    \boldsymbol{\bar{\encInput}}^{(i-1)} &= \operatorname{MultiHeadAttn}\left(\encInput^{(i-1)},\encInput^{(i-1)}\right)\\
+%?    \boldsymbol{\hat{\encInput}}^{(i-1)} &= \encInput^{(i-1)} + \boldsymbol{\bar{\encInput}}^{(i-1)}\\
+%?    \boldsymbol{\tilde{\encInput}}^{(i-1)} &= \operatorname{LayerNorm}\left(
+%?        \boldsymbol{\hat{\encInput}}^{(i-1)} \right)\\
+%?    \boldsymbol{\acute{\encInput}}^{(i-1)} &= \operatorname{FeedForward}\left(
+%?        \boldsymbol{\tilde{\encInput}}^{(i-1)} \right)\\
+%?\encInput^{(i)} & =  \boldsymbol{\hat{\encInput}}^{(i-1)} +
+%?  \boldsymbol{\acute{\encInput}}^{(i-1)} 
+%?\end{align*}
+%?
+%?We indicate the final Transformer encoder output layer with $\encInput = \encInput^{(l)}$.
+%?
+%?
+%?\[ \decInput^{(0)} = \left[\begin{array}{c}
+%?        \uttEmb_{\attr_1} + \posEmb_{1},\\
+%?        \vdots\\
+%?    \mrEmb_{\attr_\mrSize} + \posEmb_{\mrSize}\end{array} \right] \]
+%?
+%?
+%?\begin{align*}
+%?    \boldsymbol{\check{\decInput}}^{(i-1)} &= \layerNorm\left(
+%?        \decInput^{(i-1)}\right)\\
+%?    \boldsymbol{\bar{\decInput}}^{(i-1)} &= \mmhAttn\left(
+%?        \decInput^{(i-1)},\decInput^{(i-1)}\right)\\
+%?    \boldsymbol{\hat{\decInput}}^{(i-1)} &= 
+%?        \decInput^{(i-1)} + \boldsymbol{\bar{\decInput}}^{(i-1)}\\
+%?%
+%?    \boldsymbol{\check{\decInput}}^{(i-1)} &= \layerNorm\left(
+%?        \decInput^{(i-1)}\right)\\
+%?    \boldsymbol{\bar{\decInput}}^{(i-1)} &= \mhAttn\left(
+%?        \decInput^{(i-1)},\encInput^{(i-1)}\right)\\
+%?    \boldsymbol{\hat{\decInput}}^{(i-1)} &= 
+%?        \decInput^{(i-1)} + \boldsymbol{\bar{\decInput}}^{(i-1)}\\
+%?%
+%?    \boldsymbol{\tilde{\decInput}}^{(i-1)} &= \operatorname{LayerNorm}\left(
+%?        \boldsymbol{\hat{\decInput}}^{(i-1)} \right)\\
+%?    \boldsymbol{\acute{\decInput}}^{(i-1)} &= \operatorname{FeedForward}\left(
+%?        \boldsymbol{\tilde{\decInput}}^{(i-1)} \right)\\
+%?\decInput^{(i)} & =  \boldsymbol{\hat{\decInput}}^{(i-1)} +
+%?  \boldsymbol{\acute{\decInput}}^{(i-1)} 
+%?\end{align*}
+%?
+%?
+%?\[\Attn\left(\mathbf{Q}, \mathbf{K}, \mathbf{V}\right) = \softmax\left(\frac{\mathbf{Q} \mathbf{K}^T}{\sqrt{d_k}} \right)\mathbf{V} \]
+%?
+%?
+%?\noindent  $\mhAttn(\Query, \Key) =$
+%?\[ \left[ \begin{array}{c} 
+%?    \Attn\left(\Query\mathbf{W}^{(Q)}_1, \Key\mathbf{W}^{(K)}_1, \Key \mathbf{W}^{(V)}_1 \right),\\
+%?    \vdots \\
+%?    \Attn\left(\Query\mathbf{W}^{(Q)}_H, \Key\mathbf{W}^{(K)}_H, \Key \mathbf{W}^{(V)}_H \right),
+%?    \end{array} \right] \mathbf{W}^{(O)}
+%?\]
+%?
+%?
+%?\[\feedforward\left(\encInput \right) = \max\left(0, \encInput\mathbf{W} + \mathbf{b} \right)\mathbf{W} + \mathbf{b}\]
+%?
+%?\[ \model\left(\utt_i|\utt_{<i},\lin(\mr)\right) = \softmax\left( \mathbf{W}\decInputi + \mathbf{b} \right) \]
+%?
+%?
+%?
+%?\[\layerNorm(\encInput) = \mathbf{A} \odot (\encInput - \mu_\encInput) \odot \left(\sigma_\encInput + \epsilon\right)^{-1} + \mathbf{b} \]
+%?
+%?$(\mu_\encInput)_i = \frac{1}{F} \sum_{j=1}^F \encInput_{i,j} $
+%?
+%?
+%?$(\sigma_\encInput)_{i,j} = \sqrt{\frac{1}{F-1} \sum_{j^\prime=1}^F \left( \encInput_{i,j^\prime} - (\mu_\encInput)_{i,j}\right)^2} $
+%?
 %Let $X = [v_1, \ldots, v_{\size{\mr}}] \in \mathbb{R}^{\size{\mr} \times 512 }$, i.e. the concatenation of the embeddings of the encoder input
 %
 %
@@ -363,7 +544,9 @@ $(\sigma_\encInput)_{i,j} = \sqrt{\frac{1}{F-1} \sum_{j^\prime=1}^F \left( \encI
 %\]
 
 
-\subsection{Transformer Hyper-Parameter Search}
+\input{tables/tfhp.tex}
+
+\subsection{Transformer Hyperparameter Search}
 We grid searched over the following Transformer hyper-parameters:
 \begin{itemize}
     \item \textbf{Tied Decoder Embeddings:} tied, untied
@@ -373,65 +556,67 @@ We grid searched over the following Transformer hyper-parameters:
 
 During hyperparameter search, we train for at most 500
 epochs, evaluating \textsc{Bleu} every 25 epochs to select the best model.
-We now list the winning hyper-parameter settings:
+%We now list the winning hyper-parameter settings:
+
+Winning hyperparameter settings are presented \autoref{tab:tfparams}.
 
 
-\begin{itemize}
-    \item E2E
-\begin{itemize}
-    \item \lsshort{Rnd} --- 1 layer, $0.1$ label smoothing, tied embeddings
-        \begin{itemize}
-            \item Params: 7,966,787
-            \item Avg. Train Time: 18.09 hours
-        \end{itemize}
-    \item \lsshort{Fp} --- 1 layers, $0.1$ label smoothing, tied embeddings
-        \begin{itemize}
-            \item Params: 7,970,371
-            \item Avg. Train Time: 17.30 hours
-        \end{itemize}
-    \item \lsshort{If} --- 1 layers, $0.1$ label smoothing, untied embeddings
-        \begin{itemize}
-            \item Params: 8,525,379
-            \item Avg. Train Time: 17.52 hours
-            \item Avg. Train Time (\textsc{+p}): 28.11 hours
-        \end{itemize}
-    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, untied embeddings
-        \begin{itemize}
-            \item Params: 15,881,795
-            \item Avg. Train Time: 23.73 hours
-            \item Avg. Train Time (\textsc{+p}): 29.39 hours
-        \end{itemize}
-\end{itemize}
-\item ViGGO
-\begin{itemize}
-    \item \lsshort{Rnd} --- 2 layers, $0.0$ label smoothing, untied embeddings
-        \begin{itemize}
-            \item Params: 15,598,897
-            \item Avg. Train Time: 11.22 hours
-        \end{itemize}
-    \item \lsshort{Fp} --- 2 layers, $0.1$ label smoothing, untied embeddings
-        \begin{itemize}
-            \item Params: 15,605,041
-            \item Avg. Train Time: 9.68 hours
-        \end{itemize}
-    \item \lsshort{If} --- 2 layers, $0.1$ label smoothing, untied embeddings
-        \begin{itemize}
-            \item Params: 15,598,897
-            \item Avg. Train Time: 11.35 hours
-            \item Avg. Train Time (\textsc{+p}): 9.09 hours
-        \end{itemize}
-    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, untied embeddings
-        \begin{itemize}
-            \item Params: 15,598,897
-            \item Avg. Train Time: 7.26 hours
-            \item Avg. Train Time (\textsc{+p}): 5.87 hours
-        \end{itemize}
-\end{itemize}
-\end{itemize}
+%\begin{itemize}
+%    \item E2E
+%\begin{itemize}
+%    \item \lsshort{Rnd} --- 1 layer, $0.1$ label smoothing, tied embeddings
+%        \begin{itemize}
+%            \item Params: 7,966,787
+%            \item Avg. Train Time: 18.09 hours
+%        \end{itemize}
+%    \item \lsshort{Fp} --- 1 layers, $0.1$ label smoothing, tied embeddings
+%        \begin{itemize}
+%            \item Params: 7,970,371
+%            \item Avg. Train Time: 17.30 hours
+%        \end{itemize}
+%    \item \lsshort{If} --- 1 layers, $0.1$ label smoothing, untied embeddings
+%        \begin{itemize}
+%            \item Params: 8,525,379
+%            \item Avg. Train Time: 17.52 hours
+%            \item Avg. Train Time (\textsc{+p}): 28.11 hours
+%        \end{itemize}
+%    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, untied embeddings
+%        \begin{itemize}
+%            \item Params: 15,881,795
+%            \item Avg. Train Time: 23.73 hours
+%            \item Avg. Train Time (\textsc{+p}): 29.39 hours
+%        \end{itemize}
+%\end{itemize}
+%\item ViGGO
+%\begin{itemize}
+%    \item \lsshort{Rnd} --- 2 layers, $0.0$ label smoothing, untied embeddings
+%        \begin{itemize}
+%            \item Params: 15,598,897
+%            \item Avg. Train Time: 11.22 hours
+%        \end{itemize}
+%    \item \lsshort{Fp} --- 2 layers, $0.1$ label smoothing, untied embeddings
+%        \begin{itemize}
+%            \item Params: 15,605,041
+%            \item Avg. Train Time: 9.68 hours
+%        \end{itemize}
+%    \item \lsshort{If} --- 2 layers, $0.1$ label smoothing, untied embeddings
+%        \begin{itemize}
+%            \item Params: 15,598,897
+%            \item Avg. Train Time: 11.35 hours
+%            \item Avg. Train Time (\textsc{+p}): 9.09 hours
+%        \end{itemize}
+%    \item \lsshort{At} --- 2 layers, $0.1$ label smoothing, untied embeddings
+%        \begin{itemize}
+%            \item Params: 15,598,897
+%            \item Avg. Train Time: 7.26 hours
+%            \item Avg. Train Time (\textsc{+p}): 5.87 hours
+%        \end{itemize}
+%\end{itemize}
+%\end{itemize}
 
 
 
-\subsection{BART Model Hyper-Parameters}
+\subsection{BART Model Hyperparameters}
 
 We use the same settings as the fine-tuning for the CNN-DailyMail 
 summarization task,
@@ -448,7 +633,10 @@ arbitrary strings. Rather than extending it's encoder input vocabulary to
 add the MR tokens, we simply format the input MR as a string 
 (in the correpsonding linearization order), e.g. ``inform rating=good name=NAME platforms=PC platforms=Xbox''.
 
+\clearpage
+
 \input{tables/app_e2e_valid_agg.tex}
+\input{tables/app_viggo_valid_agg.tex}
 
 \subsection{Validation Results}
 
@@ -460,4 +648,3 @@ matching rules as input, rather than the original validation set MR.
 
 
 
-\input{tables/app_viggo_valid_agg.tex}
